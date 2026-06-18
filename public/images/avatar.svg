@@ -1,0 +1,15 @@
+<svg width="760" height="760" viewBox="0 0 760 760" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrated avatar</title>
+  <desc id="desc">A clean abstract avatar made from warm editorial shapes.</desc>
+  <rect width="760" height="760" rx="48" fill="#EEEEE6"/>
+  <circle cx="380" cy="300" r="132" fill="#22251F"/>
+  <path d="M226 628C245 516 300 458 380 458C460 458 515 516 534 628H226Z" fill="#22251F"/>
+  <path d="M285 279C306 214 354 181 430 180C405 219 404 260 428 304C385 289 337 281 285 279Z" fill="#B9D66F"/>
+  <circle cx="337" cy="308" r="12" fill="#F7F7F3"/>
+  <circle cx="423" cy="308" r="12" fill="#F7F7F3"/>
+  <path d="M333 374C363 395 396 395 428 374" stroke="#F7F7F3" stroke-width="16" stroke-linecap="round"/>
+  <path d="M130 182C165 130 212 94 272 74" stroke="#D9DBCF" stroke-width="18" stroke-linecap="round"/>
+  <path d="M590 564C641 528 673 482 687 425" stroke="#D9DBCF" stroke-width="18" stroke-linecap="round"/>
+  <rect x="118" y="506" width="134" height="44" rx="22" fill="#B9D66F"/>
+  <rect x="508" y="140" width="134" height="44" rx="22" fill="#F7F7F3"/>
+</svg>

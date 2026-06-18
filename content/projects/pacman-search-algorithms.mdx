@@ -1,0 +1,64 @@
+---
+title: "Pacman Search Algorithms"
+summary: "Project học tập mô phỏng các thuật toán tìm kiếm trong môi trường Pacman để hiểu cách agent ra quyết định."
+year: "2026"
+role: "Implementation, experiment notes, result comparison"
+stack:
+  - Python
+  - Search Algorithms
+  - AI Fundamentals
+tags:
+  - ai
+  - algorithms
+  - learning-project
+status: "Learning project"
+cover: "/images/project-pacman.svg"
+repoUrl: "private"
+demoUrl: ""
+caseStudyUrl: "/projects/pacman-search-algorithms"
+externalUrl: ""
+highlights:
+  - "Compared BFS, DFS, UCS and A* search behavior"
+  - "Documented tradeoffs between completeness, optimality and runtime"
+  - "Turned assignment code into a readable learning note"
+featured: true
+draft: false
+---
+
+## Project này là gì?
+
+Đây là project học tập dùng môi trường Pacman để quan sát cách các thuật toán tìm kiếm hoạt động. Thay vì chỉ đọc lý thuyết, mình muốn nhìn thấy thuật toán chọn đường, mắc kẹt, tối ưu hoặc tốn tài nguyên như thế nào.
+
+## Vì sao làm project này?
+
+Các thuật toán như BFS, DFS, UCS và A* dễ bị học thuộc nếu chỉ nhìn công thức. Khi đặt vào một môi trường có trạng thái, chi phí và mục tiêu rõ ràng, sự khác nhau giữa chúng trở nên dễ hiểu hơn.
+
+## Vấn đề hoặc mục tiêu cần giải quyết
+
+Mục tiêu là triển khai và so sánh hành vi của nhiều chiến lược tìm kiếm: thuật toán nào tìm được lời giải, thuật toán nào tối ưu hơn, và chi phí chạy thay đổi ra sao khi môi trường phức tạp hơn.
+
+## Vai trò của tôi trong project
+
+Mình triển khai phần thuật toán, chạy thử trên nhiều maze, ghi lại quan sát và tóm tắt bài học thành case study ngắn.
+
+## Tech stack/công cụ sử dụng
+
+- Python cho phần thuật toán.
+- Priority queue cho UCS và A*.
+- Heuristic function để định hướng đường đi.
+- Markdown notes để ghi lại kết quả.
+
+## Tính năng chính
+
+- DFS để quan sát chiến lược đi sâu.
+- BFS để tìm đường theo số bước.
+- UCS để tối ưu theo chi phí.
+- A* để kết hợp chi phí thực tế và heuristic.
+
+## Kết quả đạt được
+
+Project giúp mình hiểu rõ hơn vì sao cùng là tìm đường nhưng mỗi thuật toán phù hợp với một tình huống khác nhau. Đặc biệt, heuristic tốt có thể làm A* hiệu quả hơn nhiều mà vẫn giữ được tính tối ưu trong điều kiện phù hợp.
+
+## Bài học rút ra
+
+Một thuật toán không chỉ nên được đánh giá bằng việc nó có chạy hay không. Cần nhìn vào dữ liệu đầu vào, giả định, chi phí, và cách nó thất bại khi điều kiện thay đổi.

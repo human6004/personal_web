@@ -1,0 +1,56 @@
+{
+  "name": "Nhan",
+  "title": "Nhan - Personal Portfolio + Knowledge Blog",
+  "description": "Một không gian cá nhân để ghi lại hành trình phát triển, project, bài viết và những điều đáng chú ý trên đường học tập.",
+  "tagline": "Mình viết, học, xây dựng project và lưu lại những điều đáng chú ý trên hành trình phát triển cá nhân.",
+  "englishTagline": "I write, build, and collect ideas across tech, learning, and everyday curiosity.",
+  "socials": {
+    "github": "nhan",
+    "linkedin": "nhan",
+    "facebook": "nhan",
+    "email": "nhan",
+    "cv": "nhan"
+  },
+  "home": {
+    "heroEyebrow": "Personal portfolio + knowledge blog",
+    "heroTitle": "Một nơi để viết, học và xây dựng project.",
+    "heroDescription": "Mình viết, học, xây dựng project và lưu lại những điều đáng chú ý trên hành trình phát triển cá nhân.",
+    "nowTitle": "Now",
+    "nowBody": [
+      "Mình đang xây một hệ thống nhỏ để lưu lại project, bài viết và những điều đáng chú ý trong quá trình học. Website này là nơi thử cách trình bày đó một cách rõ ràng hơn.",
+      "Trọng tâm hiện tại là viết đều hơn, build có chủ đích hơn, và giữ lại các ghi chú đủ sạch để sau này có thể quay lại."
+    ]
+  },
+  "about": {
+    "metadataDescription": "Câu chuyện cá nhân ngắn, điều đang quan tâm, cách học và cách xây dựng project.",
+    "eyebrow": "About",
+    "title": "Một không gian nhỏ để theo dõi hành trình phát triển.",
+    "intro": "Đây là phần giới thiệu mở, được viết để dễ thay bằng thông tin thật của bạn sau này. Trọng tâm là câu chuyện cá nhân, điều đang quan tâm, cách học, cách ghi chú và cách biến ý tưởng thành project.",
+    "interestsTitle": "Những điều mình đang quan tâm",
+    "interests": [
+      "Học tập có hệ thống",
+      "Viết và ghi chú",
+      "Công nghệ hữu ích",
+      "Project cá nhân",
+      "Công cụ làm việc",
+      "Trải nghiệm đời sống"
+    ],
+    "practicesTitle": "Cách mình học và xây dựng project",
+    "practices": [
+      {
+        "title": "Học bằng cách đặt câu hỏi",
+        "body": "Mình muốn mỗi bài đọc hoặc project đều để lại một câu hỏi rõ hơn, không chỉ một đoạn ghi chú dài."
+      },
+      {
+        "title": "Ghi chú để quay lại",
+        "body": "Ghi chú cần có ngữ cảnh, ý chính và lý do giữ lại. Nếu không quay lại được, ghi chú chưa thật sự hữu ích."
+      },
+      {
+        "title": "Build để hiểu sâu hơn",
+        "body": "Project giúp biến lý thuyết thành thứ có thể thử, sửa và nhìn thấy giới hạn."
+      }
+    ],
+    "directionTitle": "Định hướng sắp tới",
+    "directionBody": "Tiếp tục gom project, viết các bài ghi chú ngắn hơn nhưng đều hơn, và biến website này thành nơi phản ánh rõ hơn cách bạn học, làm và quan sát thế giới xung quanh."
+  }
+}

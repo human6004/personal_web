@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.env*
+!.env.example
+!.env.local.example
+.codex-dev*
+.dev-server*.log
+.next-start*.log
+.wscript-test.txt
+coverage
+dist

@@ -1,0 +1,16 @@
+<svg width="960" height="620" viewBox="0 0 960 620" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Pacman search algorithms visual</title>
+  <desc id="desc">An abstract maze and pathfinding visual.</desc>
+  <rect width="960" height="620" rx="40" fill="#22251F"/>
+  <path d="M132 132H828V488H132V132Z" stroke="#EEEFE6" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M240 132V300H416V488" stroke="#EEEFE6" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M552 132V270H720V488" stroke="#EEEFE6" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M240 372H552" stroke="#EEEFE6" stroke-width="24" stroke-linecap="round"/>
+  <circle cx="222" cy="222" r="42" fill="#B9D66F"/>
+  <path d="M222 222L260 202V242L222 222Z" fill="#22251F"/>
+  <circle cx="390" cy="222" r="12" fill="#B9D66F"/>
+  <circle cx="480" cy="222" r="12" fill="#B9D66F"/>
+  <circle cx="570" cy="222" r="12" fill="#B9D66F"/>
+  <circle cx="660" cy="222" r="12" fill="#B9D66F"/>
+  <path d="M222 222C312 300 430 300 520 372C586 425 650 432 720 424" stroke="#B9D66F" stroke-width="10" stroke-dasharray="18 18" stroke-linecap="round"/>
+</svg>
