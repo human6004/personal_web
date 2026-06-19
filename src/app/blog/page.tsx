@@ -35,7 +35,7 @@ export default async function BlogPage() {
             {categories.map((category) => (
               <span
                 key={category}
-                className="rounded-full bg-[var(--surface)] px-3 py-1 text-sm text-[var(--muted)]"
+                className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold text-[var(--ink)]"
               >
                 {category}
               </span>

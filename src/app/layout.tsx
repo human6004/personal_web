@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -8,14 +8,14 @@ import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
-const fraunces = Fraunces({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin", "vietnamese"],
   display: "swap",
-  variable: "--font-display",
-  axes: ["opsz", "SOFT"]
+  weight: ["500", "600", "700"],
+  variable: "--font-display"
 });
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "vietnamese"],
   display: "swap",
   variable: "--font-sans"
@@ -69,7 +69,7 @@ export default async function RootLayout({
     <html
       lang="vi"
       data-scroll-behavior="smooth"
-      className={`${fraunces.variable} ${inter.variable}`}
+      className={`${spaceGrotesk.variable} ${jakarta.variable}`}
     >
       <body>
         <a href="#main-content" className="skip-link">

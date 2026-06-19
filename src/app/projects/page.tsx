@@ -35,7 +35,7 @@ export default async function ProjectsPage() {
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-[var(--surface)] px-3 py-1 text-sm text-[var(--muted)]"
+                className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold text-[var(--ink)]"
               >
                 {tag}
               </span>

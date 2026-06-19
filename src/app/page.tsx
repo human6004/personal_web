@@ -47,7 +47,7 @@ export default async function HomePage() {
         </Reveal>
         <Reveal delay={0.08}>
           <div className="relative">
-            <div className="absolute inset-6 rounded-[40px] bg-[var(--accent-soft)]" />
+            <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-[var(--radius)] bg-[var(--accent)]" />
             <Image
               src="/images/avatar.svg"
               alt={`Illustrated avatar for ${profile.name}`}
@@ -55,14 +55,14 @@ export default async function HomePage() {
               height={760}
               priority
               unoptimized
-              className="relative w-full rounded-[40px] border border-[var(--line)] bg-[var(--surface)] object-cover"
+              className="relative w-full rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] bg-[var(--surface)] object-cover"
             />
           </div>
         </Reveal>
       </section>
 
       <Reveal>
-        <section className="grid gap-8 rounded-[28px] border border-[var(--line)] bg-[var(--surface)] p-6 md:grid-cols-[0.7fr_1.3fr] md:p-12">
+        <section className="brut-card grid gap-8 p-6 md:grid-cols-[0.7fr_1.3fr] md:p-12">
           <div className="grid content-start gap-3">
             <p className="eyebrow">Now</p>
             <h2 className="display-section">{profile.home.nowTitle}</h2>

@@ -19,12 +19,11 @@ export function Field({
   rows = 4,
   help
 }: FieldProps) {
-  const inputClass =
-    "rounded-[16px] border border-[var(--line)] bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--ink)] focus:ring-2 focus:ring-[var(--accent)]";
+  const inputClass = "brut-input text-sm";
 
   return (
     <label className="grid gap-2">
-      <span className="text-sm font-medium">{label}</span>
+      <span className="text-sm font-bold">{label}</span>
       {multiline ? (
         <textarea
           name={name}

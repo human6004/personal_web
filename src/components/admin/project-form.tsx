@@ -72,7 +72,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
         });
       }}
     >
-      <div className="grid gap-5 rounded-[28px] border border-[var(--line)] bg-[var(--paper)] p-6">
+      <div className="brut-card grid gap-5 p-6">
         <div className="grid gap-5 md:grid-cols-2">
           <Field label="Title" name="title" defaultValue={project?.title} required />
           <Field label="Slug" name="slug" defaultValue={project?.slug} required />
@@ -109,18 +109,18 @@ export function ProjectForm({ project }: ProjectFormProps) {
           rows={5}
         />
         <div className="flex flex-wrap gap-5">
-          <label className="flex items-center gap-3 text-sm font-medium">
+          <label className="flex items-center gap-3 text-sm font-bold">
             <input name="featured" type="checkbox" defaultChecked={project?.featured} />
             Featured on homepage
           </label>
-          <label className="flex items-center gap-3 text-sm font-medium">
+          <label className="flex items-center gap-3 text-sm font-bold">
             <input name="draft" type="checkbox" defaultChecked={project?.draft} />
             Draft, ẩn khỏi public site
           </label>
         </div>
       </div>
 
-      <div className="grid gap-3 rounded-[28px] border border-[var(--line)] bg-[var(--paper)] p-6">
+      <div className="brut-card grid gap-3 p-6">
         <Field
           label="Markdown/MDX case study"
           name="content"
@@ -135,7 +135,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
         <button
           type="submit"
           disabled={pending}
-          className="rounded-full bg-[var(--ink)] px-5 py-3 text-sm font-semibold text-[var(--paper)] transition hover:bg-[var(--accent)] hover:text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-5 py-3 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {pending ? "Saving" : "Save project"}
         </button>

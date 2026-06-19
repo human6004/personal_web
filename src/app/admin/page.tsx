@@ -56,9 +56,9 @@ export default async function AdminDashboardPage() {
             <Link
               key={item.href}
               href={item.href}
-              className="grid gap-3 rounded-[24px] border border-[var(--line)] bg-[var(--paper)] p-6 transition hover:-translate-y-1 hover:border-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+              className="brut-card brut-press grid gap-3 p-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
             >
-              <span className="text-xl font-semibold tracking-[-0.03em]">
+              <span className="font-display text-xl font-bold tracking-[-0.02em]">
                 {item.title}
               </span>
               <span className="text-sm leading-6 text-[var(--muted)]">{item.body}</span>
@@ -72,9 +72,9 @@ export default async function AdminDashboardPage() {
 
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-[24px] border border-[var(--line)] bg-[var(--paper)] p-6">
-      <p className="text-sm font-medium text-[var(--muted)]">{label}</p>
-      <p className="mt-3 text-4xl font-semibold tracking-[-0.05em]">{value}</p>
+    <div className="brut-card p-6">
+      <p className="text-sm font-bold text-[var(--muted)]">{label}</p>
+      <p className="mt-3 font-display text-4xl font-bold tracking-[-0.04em]">{value}</p>
     </div>
   );
 }

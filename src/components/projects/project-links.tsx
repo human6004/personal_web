@@ -33,7 +33,7 @@ export function ProjectLinks({
       ) : null}
 
       {privateRepo ? (
-        <span className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--muted)]">
+        <span className="inline-flex items-center gap-2 rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] px-4 py-2 text-sm font-bold text-[var(--ink)]">
           <LockSimple aria-hidden size={16} />
           Private repo
         </span>

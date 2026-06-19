@@ -76,11 +76,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         height={860}
         priority
         unoptimized
-        className="rounded-[32px] border border-[var(--line)] bg-[var(--surface)]"
+        className="rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] bg-[var(--surface)] shadow-[var(--shadow)]"
       />
 
       <section className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
-        <aside className="grid h-fit gap-4 rounded-[24px] border border-[var(--line)] bg-[var(--paper)] p-6">
+        <aside className="brut-card grid h-fit gap-4 p-6">
           <div>
             <p className="text-sm text-[var(--muted)]">Role</p>
             <p className="mt-1 font-medium">{project.role}</p>
@@ -91,7 +91,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               {project.stack.map((item) => (
                 <span
                   key={item}
-                  className="rounded-full bg-[var(--surface)] px-3 py-1 text-sm"
+                  className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold"
                 >
                   {item}
                 </span>

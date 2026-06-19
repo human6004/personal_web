@@ -41,7 +41,7 @@ export default async function AboutPage() {
             {about.interests.map((interest) => (
               <div
                 key={interest}
-                className="rounded-[18px] border border-[var(--line)] bg-[var(--paper)] p-4 text-sm font-medium"
+                className="brut-card rounded-[var(--radius)] p-4 text-sm font-bold"
               >
                 {interest}
               </div>
@@ -58,8 +58,8 @@ export default async function AboutPage() {
         <div className="grid gap-4 md:grid-cols-3">
           {about.practices.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.05}>
-              <article className="h-full rounded-[24px] border border-[var(--line)] bg-[var(--paper)] p-6">
-                <h3 className="font-display text-xl font-medium tracking-[-0.01em]">
+              <article className="brut-card h-full p-6">
+                <h3 className="font-display text-xl font-bold tracking-[-0.01em]">
                   {item.title}
                 </h3>
                 <p className="mt-4 leading-7 text-[var(--muted)]">{item.body}</p>
@@ -70,7 +70,7 @@ export default async function AboutPage() {
       </section>
 
       <Reveal>
-        <section className="grid gap-5 rounded-[28px] border border-[var(--line)] bg-[var(--surface)] p-6 md:p-12">
+        <section className="brut-card grid gap-5 p-6 md:p-12">
           <p className="eyebrow">What's next</p>
           <h2 className="display-section">{about.directionTitle}</h2>
           <p className="max-w-3xl text-lg leading-8 text-[var(--muted)]">

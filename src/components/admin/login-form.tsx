@@ -10,7 +10,7 @@ export function LoginForm() {
 
   return (
     <form
-      className="grid gap-5 rounded-[28px] border border-[var(--line)] bg-[var(--paper)] p-6 shadow-[0_24px_70px_rgba(34,37,31,0.08)]"
+      className="brut-card grid gap-5 p-6"
       onSubmit={(event) => {
         event.preventDefault();
         setError("");
@@ -35,12 +35,12 @@ export function LoginForm() {
       }}
     >
       <label className="grid gap-2">
-        <span className="text-sm font-medium">Admin password</span>
+        <span className="text-sm font-bold">Admin password</span>
         <input
           name="password"
           type="password"
           autoComplete="current-password"
-          className="rounded-[16px] border border-[var(--line)] bg-white px-4 py-3 outline-none transition focus:border-[var(--ink)] focus:ring-2 focus:ring-[var(--accent)]"
+          className="brut-input"
           required
         />
       </label>
@@ -48,7 +48,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-[var(--ink)] px-5 py-3 text-sm font-semibold text-[var(--paper)] transition hover:bg-[var(--accent)] hover:text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-60"
+        className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-5 py-3 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {pending ? "Checking" : "Login"}
       </button>

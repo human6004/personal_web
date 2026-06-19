@@ -68,7 +68,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-[var(--surface)] px-3 py-1 text-sm text-[var(--muted)]"
+              className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold text-[var(--ink)]"
             >
               {tag}
             </span>
@@ -82,7 +82,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         height={760}
         priority
         unoptimized
-        className="rounded-[32px] border border-[var(--line)] bg-[var(--surface)]"
+        className="rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] bg-[var(--surface)] shadow-[var(--shadow)]"
       />
       <MdxContent source={post.content} />
     </article>

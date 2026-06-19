@@ -11,12 +11,12 @@ const adminNav = [
 export function AdminShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-[100dvh] bg-[var(--paper)]">
-      <header className="border-b border-[var(--line)] bg-[rgba(247,247,243,0.92)] backdrop-blur-xl">
+      <header className="border-b-[2.5px] border-[var(--ink)] bg-[var(--surface)]">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="grid gap-1">
             <Link
               href="/admin"
-              className="text-lg font-semibold tracking-[-0.03em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+              className="font-display text-lg font-bold tracking-[-0.02em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
             >
               Local Admin
             </Link>
@@ -29,7 +29,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-full border border-[var(--line)] px-3 py-2 text-sm font-medium text-[var(--muted)] transition hover:border-[var(--ink)] hover:text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                className="brut-card brut-press rounded-[var(--radius)] px-3 py-2 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
               >
                 {item.label}
               </Link>

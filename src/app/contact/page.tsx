@@ -47,7 +47,7 @@ export default async function ContactPage() {
               href={item.href}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
-              className="flex items-center justify-between rounded-[22px] border border-[var(--line)] bg-[var(--paper)] p-5 text-lg font-medium transition hover:-translate-y-1 hover:border-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+              className="brut-card brut-press flex items-center justify-between p-5 text-lg font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
             >
               <span>{item.label}</span>
               <ArrowUpRight aria-hidden />
@@ -55,8 +55,8 @@ export default async function ContactPage() {
           ))}
         </section>
       ) : (
-        <section className="rounded-[28px] border border-[var(--line)] bg-[var(--surface)] p-6 md:p-10">
-          <h2 className="text-2xl font-semibold tracking-[-0.03em]">
+        <section className="brut-card p-6 md:p-10">
+          <h2 className="font-display text-2xl font-bold tracking-[-0.01em]">
             Chưa thêm link liên hệ công khai
           </h2>
           <p className="mt-3 max-w-2xl leading-7 text-[var(--muted)]">

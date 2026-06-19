@@ -11,9 +11,9 @@ type InternalLinkProps = {
 
 const variants = {
   solid:
-    "bg-[var(--ink)] text-[var(--paper)] hover:bg-[var(--accent)] hover:text-[var(--ink)]",
+    "brut-press border-[2.5px] border-[var(--ink)] shadow-[var(--shadow-sm)] bg-[var(--accent)] text-[var(--ink)]",
   outline:
-    "border border-[var(--line)] text-[var(--ink)] hover:border-[var(--ink)] hover:bg-[var(--surface)]",
+    "brut-press border-[2.5px] border-[var(--ink)] shadow-[var(--shadow-sm)] bg-[var(--surface)] text-[var(--ink)]",
   text: "text-[var(--ink)] underline-offset-4 hover:underline"
 };
 
@@ -27,7 +27,7 @@ export function InternalLink({
     <Link
       href={href}
       className={clsx(
-        "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] active:translate-y-px",
+        "inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]",
         variants[variant],
         className
       )}
