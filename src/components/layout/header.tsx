@@ -11,9 +11,10 @@ export function Header({ name }: HeaderProps) {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="text-base font-semibold tracking-[-0.02em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+          className="font-display text-xl font-medium tracking-[-0.01em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
         >
           {name}
+          <span aria-hidden className="text-[var(--accent)]">.</span>
         </Link>
         <nav aria-label="Primary navigation" className="flex items-center gap-1">
           {siteConfig.navItems.map((item) => (

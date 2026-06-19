@@ -26,25 +26,23 @@ export default async function HomePage() {
   const latestPosts = (await getAllPosts()).slice(0, 3);
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-20 px-4 py-12 sm:px-6 md:py-18 lg:px-8">
-      <section className="grid min-h-[calc(100dvh-8rem)] items-center gap-10 py-8 lg:grid-cols-[1.05fr_0.95fr]">
+    <div className="mx-auto grid max-w-7xl gap-24 px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+      <section className="grid min-h-[calc(100dvh-8rem)] items-center gap-12 py-8 lg:grid-cols-[1.05fr_0.95fr]">
         <Reveal className="grid gap-8">
-          <div className="grid gap-5">
-            <p className="max-w-fit rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--muted)]">
-              {profile.home.heroEyebrow}
-            </p>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] md:text-7xl">
-              {profile.home.heroTitle}
-            </h1>
-            <p className="max-w-2xl text-lg leading-8 text-[var(--muted)]">
+          <div className="grid gap-6">
+            <p className="eyebrow">{profile.home.heroEyebrow}</p>
+            <h1 className="display-hero max-w-4xl">{profile.home.heroTitle}</h1>
+            <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
               {profile.home.heroDescription}
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <InternalLink href="/projects" variant="solid">
               View projects
             </InternalLink>
-            <InternalLink href="/blog">Read blog</InternalLink>
+            <InternalLink href="/blog" variant="text">
+              Read blog
+            </InternalLink>
           </div>
         </Reveal>
         <Reveal delay={0.08}>
@@ -64,11 +62,10 @@ export default async function HomePage() {
       </section>
 
       <Reveal>
-        <section className="grid gap-8 rounded-[28px] border border-[var(--line)] bg-[var(--surface)] p-6 md:grid-cols-[0.8fr_1.2fr] md:p-10">
-          <div>
-            <h2 className="text-3xl font-semibold tracking-[-0.04em]">
-              {profile.home.nowTitle}
-            </h2>
+        <section className="grid gap-8 rounded-[28px] border border-[var(--line)] bg-[var(--surface)] p-6 md:grid-cols-[0.7fr_1.3fr] md:p-12">
+          <div className="grid content-start gap-3">
+            <p className="eyebrow">Now</p>
+            <h2 className="display-section">{profile.home.nowTitle}</h2>
           </div>
           <div className="grid gap-4 text-lg leading-8 text-[var(--muted)]">
             {profile.home.nowBody.map((paragraph) => (
@@ -78,18 +75,18 @@ export default async function HomePage() {
         </section>
       </Reveal>
 
-      <section className="grid gap-8">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div className="grid gap-3">
-            <h2 className="text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
-              Featured projects
-            </h2>
-            <p className="max-w-2xl text-[var(--muted)]">
-              Một vài project nổi bật, trình bày ngắn trên homepage và đi sâu hơn
-              ở trang case study.
-            </p>
+      <section className="grid gap-10">
+        <div className="grid gap-5">
+          <div className="rule" />
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div className="grid gap-3">
+              <p className="eyebrow">Selected work</p>
+              <h2 className="display-section">Featured projects</h2>
+            </div>
+            <InternalLink href="/projects" variant="text">
+              All projects
+            </InternalLink>
           </div>
-          <InternalLink href="/projects">All projects</InternalLink>
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
           {featuredProjects.map((project, index) => (
@@ -100,17 +97,18 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-8">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div className="grid gap-3">
-            <h2 className="text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
-              Latest writing
-            </h2>
-            <p className="max-w-2xl text-[var(--muted)]">
-              Ghi chú về học tập, công cụ, project và những thứ mình đang để ý.
-            </p>
+      <section className="grid gap-10">
+        <div className="grid gap-5">
+          <div className="rule" />
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div className="grid gap-3">
+              <p className="eyebrow">From the journal</p>
+              <h2 className="display-section">Latest writing</h2>
+            </div>
+            <InternalLink href="/blog" variant="text">
+              All posts
+            </InternalLink>
           </div>
-          <InternalLink href="/blog">All posts</InternalLink>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {latestPosts.map((post, index) => (

@@ -29,11 +29,9 @@ export default async function ContactPage() {
   return (
     <div className="mx-auto grid min-h-[70dvh] max-w-4xl gap-10 px-4 py-16 sm:px-6 lg:px-8">
       <section className="grid gap-6">
-        <p className="max-w-fit rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--muted)]">
-          Contact
-        </p>
-        <h1 className="text-5xl font-semibold leading-[0.98] tracking-[-0.06em] md:text-7xl">
-          Kết nối khi có điều đáng nói tiếp.
+        <p className="eyebrow">Contact</p>
+        <h1 className="display-hero">
+          Kết nối khi có điều <em>đáng nói tiếp.</em>
         </h1>
         <p className="max-w-2xl text-lg leading-8 text-[var(--muted)]">
           V1 không dùng contact form để tránh backend, spam và email service. Khi

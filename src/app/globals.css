@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f7f7f3;
-  --surface: #eeeee6;
-  --surface-strong: #e4e5da;
-  --ink: #22251f;
-  --muted: #666b5d;
-  --line: #d9dbcf;
-  --accent: #b9d66f;
-  --accent-soft: #e5efbc;
+  --paper: #fbfbf8;
+  --surface: #f1f1ea;
+  --surface-strong: #e6e7dd;
+  --ink: #1c1e19;
+  --muted: #5f6457;
+  --line: #dedfd4;
+  --accent: #aacb5a;
+  --accent-soft: #e8f0c8;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
 }
 
 * {
@@ -22,22 +27,74 @@ html {
 body {
   margin: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 280px),
+    radial-gradient(120% 60% at 50% -10%, rgba(170, 203, 90, 0.08), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.7), transparent 320px),
     var(--paper);
   color: var(--ink);
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "cv05", "ss01";
+  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
   background: var(--accent);
   color: var(--ink);
+}
+
+/* ---- Editorial typography helpers ---- */
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+.display-hero {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 460;
+  font-size: clamp(2.85rem, 7vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+
+.display-hero em {
+  font-style: italic;
+  font-weight: 420;
+  color: var(--muted);
+}
+
+.display-section {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 480;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 1.6rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.rule {
+  height: 1px;
+  width: 100%;
+  background: var(--line);
 }
 
 .skip-link {
@@ -67,17 +124,21 @@ body {
 
 .article-heading {
   margin-top: 2.5rem;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
   font-size: clamp(1.8rem, 4vw, 2.75rem);
-  font-weight: 650;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
 }
 
 .article-subheading {
   margin-top: 1.5rem;
-  font-size: 1.35rem;
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-size: 1.4rem;
+  font-weight: 520;
+  letter-spacing: -0.01em;
 }
 
 .article-paragraph {

@@ -26,9 +26,9 @@ export function PostCard({ post, priority = false }: PostCardProps) {
         />
       </Link>
       <div className="grid gap-4 px-2 pb-2">
-        <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
+        <div className="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--muted)]">
           <span>{post.category}</span>
-          <span aria-hidden>/</span>
+          <span aria-hidden className="text-[var(--accent)]">·</span>
           <time dateTime={post.date}>
             {new Intl.DateTimeFormat("vi-VN", {
               day: "2-digit",
@@ -36,11 +36,11 @@ export function PostCard({ post, priority = false }: PostCardProps) {
               year: "numeric"
             }).format(new Date(post.date))}
           </time>
-          <span aria-hidden>/</span>
+          <span aria-hidden className="text-[var(--accent)]">·</span>
           <span>{post.readingTime}</span>
         </div>
         <div className="grid gap-2">
-          <h2 className="text-2xl font-semibold tracking-[-0.02em]">
+          <h2 className="font-display text-2xl font-medium tracking-[-0.01em]">
             <Link
               href={`/blog/${post.slug}`}
               className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"

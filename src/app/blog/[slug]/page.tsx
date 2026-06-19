@@ -60,9 +60,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <span aria-hidden>/</span>
           <span>{post.readingTime}</span>
         </div>
-        <h1 className="text-5xl font-semibold leading-[0.98] tracking-[-0.06em] md:text-7xl">
-          {post.title}
-        </h1>
+        <h1 className="display-hero">{post.title}</h1>
         <p className="max-w-3xl text-lg leading-8 text-[var(--muted)]">
           {post.description}
         </p>

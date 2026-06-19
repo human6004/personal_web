@@ -28,13 +28,13 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
       </Link>
       <div className="grid gap-6 p-6 md:p-7">
         <div className="grid gap-3">
-          <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--muted)]">
             <span>{project.year}</span>
-            <span aria-hidden>/</span>
+            <span aria-hidden className="text-[var(--accent)]">·</span>
             <span>{project.role}</span>
           </div>
           <div className="grid gap-2">
-            <h2 className="text-2xl font-semibold tracking-[-0.02em]">
+            <h2 className="font-display text-2xl font-medium tracking-[-0.01em]">
               <Link
                 href={`/projects/${project.slug}`}
                 className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"

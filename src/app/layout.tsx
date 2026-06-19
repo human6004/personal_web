@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -6,6 +7,19 @@ import { getProfile } from "@/lib/profile";
 import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
+
+const fraunces = Fraunces({
+  subsets: ["latin", "vietnamese"],
+  display: "swap",
+  variable: "--font-display",
+  axes: ["opsz", "SOFT"]
+});
+
+const inter = Inter({
+  subsets: ["latin", "vietnamese"],
+  display: "swap",
+  variable: "--font-sans"
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await getProfile();
@@ -52,7 +66,11 @@ export default async function RootLayout({
   const profile = await getProfile();
 
   return (
-    <html lang="vi" data-scroll-behavior="smooth">
+    <html
+      lang="vi"
+      data-scroll-behavior="smooth"
+      className={`${fraunces.variable} ${inter.variable}`}
+    >
       <body>
         <a href="#main-content" className="skip-link">
           Skip to content

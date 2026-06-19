@@ -23,11 +23,9 @@ export default async function BlogPage() {
     <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:px-8">
       <Reveal>
         <section className="grid gap-6">
-          <p className="max-w-fit rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--muted)]">
-            Blog
-          </p>
-          <h1 className="max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] md:text-7xl">
-            Ghi chú để suy nghĩ rõ hơn.
+          <p className="eyebrow">Journal</p>
+          <h1 className="display-hero max-w-5xl">
+            Ghi chú để suy nghĩ <em>rõ hơn.</em>
           </h1>
           <p className="max-w-3xl text-lg leading-8 text-[var(--muted)]">
             Các bài viết ngắn về công nghệ, học tập, đọc sách, project, công cụ

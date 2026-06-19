@@ -8,14 +8,15 @@ type FooterProps = {
 
 export function Footer({ name, tagline }: FooterProps) {
   return (
-    <footer className="border-t border-[var(--line)]">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:px-8">
+    <footer className="mt-12 border-t border-[var(--line)]">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div className="grid gap-2">
-            <p className="text-lg font-semibold tracking-[-0.02em]">
+          <div className="grid gap-3">
+            <p className="font-display text-2xl font-medium tracking-[-0.01em]">
               {name}
+              <span aria-hidden className="text-[var(--accent)]">.</span>
             </p>
-            <p className="max-w-xl text-sm leading-6 text-[var(--muted)]">
+            <p className="max-w-md text-sm leading-6 text-[var(--muted)]">
               {tagline}
             </p>
           </div>
@@ -31,8 +32,9 @@ export function Footer({ name, tagline }: FooterProps) {
             ))}
           </div>
         </div>
-        <p className="text-sm text-[var(--muted)]">
-          Built as a personal portfolio and knowledge blog.
+        <div className="rule" />
+        <p className="eyebrow">
+          © {new Date().getFullYear()} {name} · Portfolio &amp; knowledge journal
         </p>
       </div>
     </footer>
