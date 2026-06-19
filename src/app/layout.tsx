@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
@@ -7,6 +7,11 @@ import { getProfile } from "@/lib/profile";
 import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1
+};
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin", "vietnamese"],

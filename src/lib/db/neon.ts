@@ -1,6 +1,8 @@
-import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
+import { neon } from "@neondatabase/serverless";
 
-type SqlClient = Pick<NeonQueryFunction<false, false>, "query">;
+type SqlClient = {
+  query(query: string, params?: unknown[]): Promise<Record<string, unknown>[]>;
+};
 
 let cachedSql: SqlClient | null = null;
 let testSql: SqlClient | null = null;
@@ -21,7 +23,7 @@ export function getSql(): SqlClient {
   }
 
   if (!cachedSql) {
-    cachedSql = neon(connectionString);
+    cachedSql = neon(connectionString) as unknown as SqlClient;
   }
 
   return cachedSql;

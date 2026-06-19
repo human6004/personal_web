@@ -1,0 +1,19 @@
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3102
+- Network:       http://192.168.56.1:3102
+- Environments: .env.local
+✓ Ready in 487ms
+
+ GET / 200 in 5.4s (next.js: 400ms, application-code: 5.0s)
+ GET / 200 in 9.9s (next.js: 12ms, application-code: 9.8s)
+ GET /projects 200 in 1978ms (next.js: 184ms, application-code: 1794ms)
+ GET /contact 200 in 2.7s (next.js: 44ms, application-code: 2.6s)
+ GET / 200 in 7.6s (next.js: 6ms, application-code: 7.6s)
+ GET /blog 200 in 1578ms (next.js: 53ms, application-code: 1525ms)
+ GET / 200 in 3.0s (next.js: 7ms, application-code: 3.0s)
+ GET /blog 200 in 868ms (next.js: 6ms, application-code: 863ms)
+ GET /blog 200 in 2.6s (next.js: 5ms, application-code: 2.6s)
+ GET /blog/hhi 200 in 4.2s (next.js: 1479ms, application-code: 2.7s)
+ GET /projects 200 in 748ms (next.js: 6ms, application-code: 742ms)
+ GET / 200 in 2.3s (next.js: 9ms, application-code: 2.3s)
+ GET / 200 in 2.7s (next.js: 7ms, application-code: 2.7s)
