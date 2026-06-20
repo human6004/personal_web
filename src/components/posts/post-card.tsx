@@ -9,10 +9,10 @@ type PostCardProps = {
 
 export function PostCard({ post, priority = false }: PostCardProps) {
   return (
-    <article className="brut-card brut-press grid gap-5 p-4">
+    <article className="brut-card brut-press grid h-full overflow-hidden">
       <Link
         href={`/blog/${post.slug}`}
-        className="block overflow-hidden rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+        className="block overflow-hidden border-b-[var(--border-w)] border-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
         aria-label={`Read post: ${post.title}`}
       >
         <Image
@@ -22,11 +22,11 @@ export function PostCard({ post, priority = false }: PostCardProps) {
           height={560}
           priority={priority}
           unoptimized
-          className="aspect-[16/10] w-full object-cover"
+          className="aspect-[16/7] w-full object-cover"
         />
       </Link>
-      <div className="grid gap-4 px-2 pb-2">
-        <div className="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--muted)]">
+      <div className="grid gap-2.5 p-4">
+        <div className="flex flex-wrap items-center gap-1.5 text-[0.66rem] font-medium uppercase tracking-[0.11em] text-[var(--muted)]">
           <span>{post.category}</span>
           <span aria-hidden className="text-[var(--accent)]">·</span>
           <time dateTime={post.date}>
@@ -39,8 +39,8 @@ export function PostCard({ post, priority = false }: PostCardProps) {
           <span aria-hidden className="text-[var(--accent)]">·</span>
           <span>{post.readingTime}</span>
         </div>
-        <div className="grid gap-2">
-          <h2 className="font-display text-2xl font-bold tracking-[-0.01em]">
+        <div className="grid gap-1.5">
+          <h2 className="content-card-title font-display text-lg font-semibold leading-snug tracking-[-0.005em]">
             <Link
               href={`/blog/${post.slug}`}
               className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
@@ -48,17 +48,9 @@ export function PostCard({ post, priority = false }: PostCardProps) {
               {post.title}
             </Link>
           </h2>
-          <p className="text-[var(--muted)]">{post.description}</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {post.tags.slice(0, 4).map((tag) => (
-            <span
-              key={tag}
-              className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold text-[var(--ink)]"
-            >
-              {tag}
-            </span>
-          ))}
+          <p className="content-card-summary text-sm leading-6 text-[var(--muted)]">
+            {post.description}
+          </p>
         </div>
       </div>
     </article>

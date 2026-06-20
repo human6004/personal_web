@@ -18,7 +18,7 @@ export function LogoutButton() {
           router.refresh();
         });
       }}
-      className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-3 py-2 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
+      className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
     >
       {pending ? "Logging out" : "Logout"}
     </button>

@@ -10,10 +10,10 @@ export default async function AdminProfilePage() {
 
   return (
     <AdminShell>
-      <div className="grid gap-8">
+      <div className="grid gap-6">
         <section className="grid gap-3">
           <p className="text-sm font-medium text-[var(--muted)]">Profile</p>
-          <h1 className="text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
+          <h1 className="font-display text-3xl font-semibold tracking-[-0.015em] md:text-4xl">
             Chỉnh thông tin cá nhân.
           </h1>
           <p className="max-w-2xl leading-7 text-[var(--muted)]">

@@ -26,13 +26,13 @@ export default async function HomePage() {
   const latestPosts = (await getAllPosts()).slice(0, 3);
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-24 px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-      <section className="grid min-h-[calc(100dvh-8rem)] items-center gap-12 py-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <Reveal className="grid gap-8">
-          <div className="grid gap-6">
+    <div className="mx-auto grid max-w-7xl gap-16 px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+      <section className="grid min-h-[calc(92dvh-7rem)] items-center gap-10 py-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <Reveal className="grid gap-7">
+          <div className="grid gap-5">
             <p className="eyebrow">{profile.home.heroEyebrow}</p>
             <h1 className="display-hero max-w-4xl">{profile.home.heroTitle}</h1>
-            <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
+            <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
               {profile.home.heroDescription}
             </p>
           </div>
@@ -46,7 +46,7 @@ export default async function HomePage() {
           </div>
         </Reveal>
         <Reveal delay={0.08}>
-          <div className="relative">
+          <div className="relative mx-auto max-w-[560px] lg:max-w-none">
             <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-[var(--radius)] bg-[var(--accent)]" />
             <Image
               src="/images/avatar.svg"
@@ -55,19 +55,19 @@ export default async function HomePage() {
               height={760}
               priority
               unoptimized
-              className="relative w-full rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] bg-[var(--surface)] object-cover"
+              className="relative w-full rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] object-cover"
             />
           </div>
         </Reveal>
       </section>
 
       <Reveal>
-        <section className="brut-card grid gap-8 p-6 md:grid-cols-[0.7fr_1.3fr] md:p-12">
-          <div className="grid content-start gap-3">
+        <section className="brut-card grid gap-6 p-5 md:grid-cols-[0.7fr_1.3fr] md:p-10">
+          <div className="grid content-start gap-2.5">
             <p className="eyebrow">Now</p>
             <h2 className="display-section">{profile.home.nowTitle}</h2>
           </div>
-          <div className="grid gap-4 text-lg leading-8 text-[var(--muted)]">
+          <div className="grid gap-3.5 text-base leading-7 text-[var(--muted)]">
             {profile.home.nowBody.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -75,11 +75,11 @@ export default async function HomePage() {
         </section>
       </Reveal>
 
-      <section className="grid gap-10">
-        <div className="grid gap-5">
+      <section className="grid gap-8">
+        <div className="grid gap-4">
           <div className="rule" />
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <div className="grid gap-3">
+            <div className="grid gap-2.5">
               <p className="eyebrow">Selected work</p>
               <h2 className="display-section">Featured projects</h2>
             </div>
@@ -88,7 +88,7 @@ export default async function HomePage() {
             </InternalLink>
           </div>
         </div>
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {featuredProjects.map((project, index) => (
             <Reveal key={project.slug} delay={index * 0.05}>
               <ProjectCard project={project} priority={index === 0} />
@@ -97,11 +97,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-10">
-        <div className="grid gap-5">
+      <section className="grid gap-8">
+        <div className="grid gap-4">
           <div className="rule" />
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <div className="grid gap-3">
+            <div className="grid gap-2.5">
               <p className="eyebrow">From the journal</p>
               <h2 className="display-section">Latest writing</h2>
             </div>
@@ -110,7 +110,7 @@ export default async function HomePage() {
             </InternalLink>
           </div>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {latestPosts.map((post, index) => (
             <Reveal key={post.slug} delay={index * 0.05}>
               <PostCard post={post} priority={index === 0} />

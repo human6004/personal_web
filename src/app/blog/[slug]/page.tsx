@@ -44,9 +44,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="mx-auto grid max-w-5xl gap-10 px-4 py-16 sm:px-6 lg:px-8">
+    <article className="mx-auto grid max-w-5xl gap-8 px-4 py-12 sm:px-6 lg:px-8">
       <InternalLink href="/blog">Back to blog</InternalLink>
-      <header className="grid gap-6">
+      <header className="grid gap-5">
         <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
           <span>{post.category}</span>
           <span aria-hidden>/</span>
@@ -61,14 +61,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <span>{post.readingTime}</span>
         </div>
         <h1 className="display-hero">{post.title}</h1>
-        <p className="max-w-3xl text-lg leading-8 text-[var(--muted)]">
+        <p className="max-w-3xl text-base leading-7 text-[var(--muted)]">
           {post.description}
         </p>
         <div className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold text-[var(--ink)]"
+              className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] px-2.5 py-0.5 text-sm font-medium text-[var(--ink)]"
             >
               {tag}
             </span>
@@ -82,7 +82,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         height={760}
         priority
         unoptimized
-        className="rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] bg-[var(--surface)] shadow-[var(--shadow)]"
+        className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] shadow-[var(--shadow)]"
       />
       <MdxContent source={post.content} />
     </article>

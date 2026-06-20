@@ -19,7 +19,7 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
 
   return (
     <form
-      className="grid gap-6"
+      className="grid gap-5"
       onSubmit={(event) => {
         event.preventDefault();
         setMessage("");
@@ -89,9 +89,9 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
         });
       }}
     >
-      <section className="brut-card grid gap-5 p-6">
-        <h2 className="font-display text-2xl font-bold tracking-[-0.02em]">Site identity</h2>
-        <div className="grid gap-5 md:grid-cols-2">
+      <section className="brut-card grid gap-4 p-5">
+        <h2 className="font-display text-xl font-semibold tracking-[-0.005em]">Site identity</h2>
+        <div className="grid gap-4 md:grid-cols-2">
           <Field label="Name" name="name" defaultValue={profile.name} required />
           <Field label="Site title" name="title" defaultValue={profile.title} required />
         </div>
@@ -100,9 +100,9 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
         <Field label="English tagline" name="englishTagline" defaultValue={profile.englishTagline} />
       </section>
 
-      <section className="brut-card grid gap-5 p-6">
-        <h2 className="font-display text-2xl font-bold tracking-[-0.02em]">Social links</h2>
-        <div className="grid gap-5 md:grid-cols-2">
+      <section className="brut-card grid gap-4 p-5">
+        <h2 className="font-display text-xl font-semibold tracking-[-0.005em]">Social links</h2>
+        <div className="grid gap-4 md:grid-cols-2">
           <Field label="GitHub" name="github" defaultValue={profile.socials.github} />
           <Field label="LinkedIn" name="linkedin" defaultValue={profile.socials.linkedin} />
           <Field label="Facebook" name="facebook" defaultValue={profile.socials.facebook} />
@@ -111,8 +111,8 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
         </div>
       </section>
 
-      <section className="brut-card grid gap-5 p-6">
-        <h2 className="font-display text-2xl font-bold tracking-[-0.02em]">Homepage</h2>
+      <section className="brut-card grid gap-4 p-5">
+        <h2 className="font-display text-xl font-semibold tracking-[-0.005em]">Homepage</h2>
         <Field label="Hero eyebrow" name="heroEyebrow" defaultValue={profile.home.heroEyebrow} />
         <Field label="Hero title" name="heroTitle" defaultValue={profile.home.heroTitle} required />
         <Field label="Hero description" name="heroDescription" defaultValue={profile.home.heroDescription} multiline rows={3} required />
@@ -120,8 +120,8 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
         <Field label="Now body" name="nowBody" defaultValue={profile.home.nowBody.join("\n")} multiline rows={5} required help="Mỗi dòng là một đoạn văn." />
       </section>
 
-      <section className="brut-card grid gap-5 p-6">
-        <h2 className="font-display text-2xl font-bold tracking-[-0.02em]">About</h2>
+      <section className="brut-card grid gap-4 p-5">
+        <h2 className="font-display text-xl font-semibold tracking-[-0.005em]">About</h2>
         <Field label="Metadata description" name="metadataDescription" defaultValue={profile.about.metadataDescription} multiline rows={3} required />
         <Field label="Eyebrow" name="aboutEyebrow" defaultValue={profile.about.eyebrow} />
         <Field label="About title" name="aboutTitle" defaultValue={profile.about.title} required />
@@ -130,7 +130,7 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
         <Field label="Interests" name="interests" defaultValue={profile.about.interests.join("\n")} multiline rows={6} required />
         <Field label="Practices title" name="practicesTitle" defaultValue={profile.about.practicesTitle} required />
         {[0, 1, 2].map((index) => (
-          <div key={index} className="grid gap-4 rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface-strong)] p-4 md:grid-cols-2">
+          <div key={index} className="grid gap-3.5 rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface-strong)] p-3.5 md:grid-cols-2">
             <Field label={`Practice ${index + 1} title`} name={`practice${index + 1}Title`} defaultValue={profile.about.practices[index]?.title || ""} />
             <Field label={`Practice ${index + 1} body`} name={`practice${index + 1}Body`} defaultValue={profile.about.practices[index]?.body || ""} multiline rows={3} />
           </div>
@@ -143,7 +143,7 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
         <button
           type="submit"
           disabled={pending}
-          className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-5 py-3 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {pending ? "Saving" : "Save profile"}
         </button>

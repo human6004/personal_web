@@ -28,7 +28,7 @@ const components: MDXComponents = {
         width={1200}
         height={760}
         unoptimized
-        className="my-8 rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] shadow-[var(--shadow)]"
+        className="my-7 rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] shadow-[var(--shadow)]"
       />
     );
   },

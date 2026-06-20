@@ -17,3 +17,8 @@
  GET /projects 200 in 748ms (next.js: 6ms, application-code: 742ms)
  GET / 200 in 2.3s (next.js: 9ms, application-code: 2.3s)
  GET / 200 in 2.7s (next.js: 7ms, application-code: 2.7s)
+ GET /about 200 in 1933ms (next.js: 50ms, application-code: 1883ms)
+ GET /blog 200 in 747ms (next.js: 8ms, application-code: 739ms)
+ GET / 200 in 4.7s (next.js: 16ms, application-code: 4.7s)
+ GET /contact 200 in 334ms (next.js: 5ms, application-code: 329ms)
+ GET /about 200 in 1693ms (next.js: 1896µs, application-code: 1691ms)

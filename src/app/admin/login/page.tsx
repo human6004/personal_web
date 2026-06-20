@@ -9,7 +9,7 @@ export default async function AdminLoginPage() {
   }
 
   return (
-    <div className="mx-auto grid min-h-[70dvh] max-w-lg content-center gap-8 px-4 py-16 sm:px-6">
+    <div className="mx-auto grid min-h-[66dvh] max-w-lg content-center gap-6 px-4 py-12 sm:px-6">
       <section className="grid gap-3">
         <p className="eyebrow">Local admin</p>
         <h1 className="display-section">Đăng nhập để chỉnh nội dung.</h1>
@@ -21,7 +21,7 @@ export default async function AdminLoginPage() {
       <LoginForm />
       <Link
         href="/"
-        className="max-w-fit text-sm font-bold text-[var(--muted)] transition hover:text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+        className="max-w-fit text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
       >
         Back to website
       </Link>

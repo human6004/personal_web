@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import { Nunito_Sans, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -13,10 +13,9 @@ export const viewport: Viewport = {
   initialScale: 1
 };
 
-const spaceGrotesk = Space_Grotesk({
+const nunitoSans = Nunito_Sans({
   subsets: ["latin", "vietnamese"],
   display: "swap",
-  weight: ["500", "600", "700"],
   variable: "--font-display"
 });
 
@@ -74,7 +73,7 @@ export default async function RootLayout({
     <html
       lang="vi"
       data-scroll-behavior="smooth"
-      className={`${spaceGrotesk.variable} ${jakarta.variable}`}
+      className={`${nunitoSans.variable} ${jakarta.variable}`}
     >
       <body>
         <a href="#main-content" className="skip-link">

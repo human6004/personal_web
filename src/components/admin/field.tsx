@@ -23,7 +23,7 @@ export function Field({
 
   return (
     <label className="grid gap-2">
-      <span className="text-sm font-bold">{label}</span>
+      <span className="text-sm font-semibold">{label}</span>
       {multiline ? (
         <textarea
           name={name}

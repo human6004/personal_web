@@ -10,7 +10,7 @@ export function LoginForm() {
 
   return (
     <form
-      className="brut-card grid gap-5 p-6"
+      className="brut-card grid gap-4 p-5"
       onSubmit={(event) => {
         event.preventDefault();
         setError("");
@@ -35,7 +35,7 @@ export function LoginForm() {
       }}
     >
       <label className="grid gap-2">
-        <span className="text-sm font-bold">Admin password</span>
+        <span className="text-sm font-semibold">Admin password</span>
         <input
           name="password"
           type="password"
@@ -48,7 +48,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-5 py-3 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
+        className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {pending ? "Checking" : "Login"}
       </button>

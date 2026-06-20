@@ -19,11 +19,11 @@ export function Header({ name }: HeaderProps) {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-30 border-b-[2.5px] border-[var(--ink)] bg-[var(--surface)]">
+    <header className="sticky top-0 z-30 border-b-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)]">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="font-display text-xl font-bold tracking-[-0.01em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+          className="font-display text-lg font-semibold tracking-[-0.005em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
         >
           {name}
           <span aria-hidden className="text-[var(--accent)]">.</span>
@@ -37,7 +37,7 @@ export function Header({ name }: HeaderProps) {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-[var(--radius)] px-3 py-2 text-sm font-bold text-[var(--ink)] transition hover:bg-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] sm:px-4"
+              className="rounded-[var(--radius)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] sm:px-3.5"
             >
               {item.label}
             </Link>
@@ -50,9 +50,9 @@ export function Header({ name }: HeaderProps) {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls="mobile-menu"
-          className="brut-card brut-press grid h-10 w-10 place-items-center rounded-[var(--radius)] bg-[var(--surface)] text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] md:hidden"
+          className="brut-card brut-press grid h-9 w-9 place-items-center rounded-[var(--radius)] bg-[var(--surface)] text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] md:hidden"
         >
-          {open ? <X size={20} weight="bold" /> : <List size={20} weight="bold" />}
+          {open ? <X size={18} weight="bold" /> : <List size={18} weight="bold" />}
         </button>
       </div>
 
@@ -60,14 +60,14 @@ export function Header({ name }: HeaderProps) {
         <nav
           id="mobile-menu"
           aria-label="Mobile navigation"
-          className="border-b-[2.5px] border-[var(--ink)] bg-[var(--surface)] md:hidden"
+          className="border-b-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] md:hidden"
         >
           {siteConfig.navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="flex min-h-[52px] items-center border-t-[2.5px] border-[var(--ink)] px-4 text-base font-bold text-[var(--ink)] transition hover:bg-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--ink)] sm:px-6"
+              className="flex min-h-[48px] items-center border-t-[var(--border-w)] border-[var(--ink)] px-4 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--ink)] sm:px-6"
             >
               {item.label}
             </Link>

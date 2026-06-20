@@ -2,8 +2,8 @@ import { InternalLink } from "@/components/ui/internal-link";
 
 export default function NotFound() {
   return (
-    <section className="mx-auto grid min-h-[70dvh] max-w-3xl place-items-center px-4 py-24 text-center sm:px-6 lg:px-8">
-      <div className="grid gap-6">
+    <section className="mx-auto grid min-h-[66dvh] max-w-3xl place-items-center px-4 py-20 text-center sm:px-6 lg:px-8">
+      <div className="grid gap-5">
         <p className="eyebrow justify-self-center">404</p>
         <h1 className="display-hero">Trang này chưa có trong sổ tay.</h1>
         <p className="mx-auto max-w-xl text-[var(--muted)]">

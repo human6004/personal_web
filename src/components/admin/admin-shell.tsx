@@ -11,12 +11,12 @@ const adminNav = [
 export function AdminShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-[100dvh] bg-[var(--paper)]">
-      <header className="border-b-[2.5px] border-[var(--ink)] bg-[var(--surface)]">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+      <header className="border-b-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)]">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3.5 px-4 py-3.5 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="grid gap-1">
             <Link
               href="/admin"
-              className="font-display text-lg font-bold tracking-[-0.02em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+              className="font-display text-lg font-semibold tracking-[-0.005em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
             >
               Local Admin
             </Link>
@@ -29,7 +29,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="brut-card brut-press rounded-[var(--radius)] px-3 py-2 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+                className="brut-card brut-press rounded-[var(--radius)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
               >
                 {item.label}
               </Link>
@@ -38,7 +38,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
       </header>
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {children}
       </main>
     </div>

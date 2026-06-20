@@ -31,10 +31,10 @@ export default async function AdminDashboardPage() {
 
   return (
     <AdminShell>
-      <div className="grid gap-10">
+      <div className="grid gap-8">
         <section className="grid gap-3">
           <p className="text-sm font-medium text-[var(--muted)]">Dashboard</p>
-          <h1 className="text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
+          <h1 className="font-display text-3xl font-semibold tracking-[-0.015em] md:text-4xl">
             Nội dung local của website.
           </h1>
           <p className="max-w-2xl leading-7 text-[var(--muted)]">
@@ -56,9 +56,9 @@ export default async function AdminDashboardPage() {
             <Link
               key={item.href}
               href={item.href}
-              className="brut-card brut-press grid gap-3 p-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+              className="brut-card brut-press grid gap-2.5 p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
             >
-              <span className="font-display text-xl font-bold tracking-[-0.02em]">
+              <span className="font-display text-lg font-semibold tracking-[-0.005em]">
                 {item.title}
               </span>
               <span className="text-sm leading-6 text-[var(--muted)]">{item.body}</span>
@@ -72,9 +72,9 @@ export default async function AdminDashboardPage() {
 
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
-    <div className="brut-card p-6">
-      <p className="text-sm font-bold text-[var(--muted)]">{label}</p>
-      <p className="mt-3 font-display text-4xl font-bold tracking-[-0.04em]">{value}</p>
+    <div className="brut-card p-5">
+      <p className="text-sm font-semibold text-[var(--muted)]">{label}</p>
+      <p className="mt-2.5 font-display text-3xl font-semibold tracking-[-0.015em]">{value}</p>
     </div>
   );
 }

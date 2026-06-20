@@ -16,32 +16,51 @@ export function ProjectLinks({
 }: ProjectLinksProps) {
   const privateRepo = isPrivateRepo(project);
   const caseStudyHref = project.caseStudyUrl || `/projects/${project.slug}`;
+  const size = compact ? "compact" : "default";
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-2">
       {showCaseStudy ? (
-        <InternalLink href={caseStudyHref} variant="solid">
+        <InternalLink href={caseStudyHref} variant="solid" size={size}>
           View case study
         </InternalLink>
       ) : null}
 
       {project.repoUrl && !privateRepo ? (
-        <ExternalLink href={project.repoUrl} variant="outline">
-          <GithubLogo aria-hidden size={compact ? 16 : 18} weight="fill" />
+        <ExternalLink
+          href={project.repoUrl}
+          variant={compact ? "text" : "outline"}
+          size={size}
+          showArrow={!compact}
+          className={compact ? "text-[var(--muted)] hover:text-[var(--ink)]" : undefined}
+        >
+          <GithubLogo aria-hidden size={compact ? 15 : 17} weight="fill" />
           GitHub repo
         </ExternalLink>
       ) : null}
 
       {privateRepo ? (
-        <span className="inline-flex items-center gap-2 rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] px-4 py-2 text-sm font-bold text-[var(--ink)]">
-          <LockSimple aria-hidden size={16} />
+        <span
+          className={
+            compact
+              ? "inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)]"
+              : "inline-flex items-center gap-1.5 rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)]"
+          }
+        >
+          <LockSimple aria-hidden size={15} />
           Private repo
         </span>
       ) : null}
 
       {project.demoUrl ? (
-        <ExternalLink href={project.demoUrl} variant="outline">
-          <RocketLaunch aria-hidden size={compact ? 16 : 18} />
+        <ExternalLink
+          href={project.demoUrl}
+          variant={compact ? "text" : "outline"}
+          size={size}
+          showArrow={!compact}
+          className={compact ? "text-[var(--muted)] hover:text-[var(--ink)]" : undefined}
+        >
+          <RocketLaunch aria-hidden size={compact ? 15 : 17} />
           Live demo
         </ExternalLink>
       ) : null}

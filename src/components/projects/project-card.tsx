@@ -10,10 +10,10 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project, priority = false }: ProjectCardProps) {
   return (
-    <article className="brut-card brut-press group grid overflow-hidden">
+    <article className="brut-card brut-press group grid h-full overflow-hidden">
       <Link
         href={`/projects/${project.slug}`}
-        className="block overflow-hidden border-b-[2.5px] border-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+        className="block overflow-hidden border-b-[var(--border-w)] border-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
         aria-label={`View case study: ${project.title}`}
       >
         <Image
@@ -23,18 +23,18 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
           height={620}
           priority={priority}
           unoptimized
-          className="aspect-[16/10] w-full object-cover"
+          className="aspect-[16/6.5] w-full object-cover"
         />
       </Link>
-      <div className="grid gap-6 p-6 md:p-7">
-        <div className="grid gap-3">
-          <div className="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--muted)]">
-            <span>{project.year}</span>
+      <div className="flex h-full flex-col gap-2.5 p-3.5 sm:p-4">
+        <div className="grid gap-2">
+          <div className="flex min-w-0 items-center gap-1.5 text-[0.66rem] font-medium uppercase tracking-[0.11em] text-[var(--muted)]">
+            <span className="shrink-0">{project.year}</span>
             <span aria-hidden className="text-[var(--accent)]">·</span>
-            <span>{project.role}</span>
+            <span className="min-w-0 truncate">{project.role}</span>
           </div>
-          <div className="grid gap-2">
-            <h2 className="font-display text-2xl font-bold tracking-[-0.01em]">
+          <div className="grid gap-1.5">
+            <h2 className="content-card-title font-display text-lg font-semibold leading-snug tracking-[-0.005em]">
               <Link
                 href={`/projects/${project.slug}`}
                 className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
@@ -42,20 +42,17 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
                 {project.title}
               </Link>
             </h2>
-            <p className="max-w-[62ch] text-[var(--muted)]">{project.summary}</p>
+            <p className="content-card-summary max-w-[62ch] text-sm leading-5 text-[var(--muted)]">
+              {project.summary}
+            </p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {project.stack.slice(0, 4).map((item) => (
-            <span
-              key={item}
-              className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold text-[var(--ink)]"
-            >
-              {item}
-            </span>
-          ))}
+        <p className="content-card-summary text-xs font-medium leading-5 text-[var(--muted)]">
+          {project.stack.slice(0, 4).join(" \u00b7 ")}
+        </p>
+        <div className="mt-auto">
+          <ProjectLinks project={project} compact />
         </div>
-        <ProjectLinks project={project} compact />
       </div>
     </article>
   );

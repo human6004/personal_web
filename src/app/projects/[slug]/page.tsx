@@ -46,10 +46,10 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const privateRepo = isPrivateRepo(project);
 
   return (
-    <article className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:px-8">
-      <section className="grid gap-8">
+    <article className="mx-auto grid max-w-7xl gap-9 px-4 py-12 sm:px-6 lg:px-8">
+      <section className="grid gap-6">
         <InternalLink href="/projects">Back to projects</InternalLink>
-        <div className="grid gap-6">
+        <div className="grid gap-5">
           <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
             <span>{project.year}</span>
             <span aria-hidden>/</span>
@@ -62,7 +62,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             ) : null}
           </div>
           <h1 className="display-hero max-w-5xl">{project.title}</h1>
-          <p className="max-w-3xl text-lg leading-8 text-[var(--muted)]">
+          <p className="max-w-3xl text-base leading-7 text-[var(--muted)]">
             {project.summary}
           </p>
           <ProjectLinks project={project} showCaseStudy={false} />
@@ -76,11 +76,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         height={860}
         priority
         unoptimized
-        className="rounded-[var(--radius)] border-[2.5px] border-[var(--ink)] bg-[var(--surface)] shadow-[var(--shadow)]"
+        className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] shadow-[var(--shadow)]"
       />
 
-      <section className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
-        <aside className="brut-card grid h-fit gap-4 p-6">
+      <section className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
+        <aside className="brut-card grid h-fit gap-3.5 p-5">
           <div>
             <p className="text-sm text-[var(--muted)]">Role</p>
             <p className="mt-1 font-medium">{project.role}</p>
@@ -91,7 +91,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               {project.stack.map((item) => (
                 <span
                   key={item}
-                  className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold"
+                  className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] px-2.5 py-0.5 text-sm font-medium"
                 >
                   {item}
                 </span>

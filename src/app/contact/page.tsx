@@ -27,13 +27,13 @@ export default async function ContactPage() {
   );
 
   return (
-    <div className="mx-auto grid min-h-[70dvh] max-w-4xl gap-10 px-4 py-16 sm:px-6 lg:px-8">
-      <section className="grid gap-6">
+    <div className="mx-auto grid min-h-[66dvh] max-w-4xl gap-8 px-4 py-12 sm:px-6 lg:px-8">
+      <section className="grid gap-5">
         <p className="eyebrow">Contact</p>
         <h1 className="display-hero">
           Kết nối khi có điều <em>đáng nói tiếp.</em>
         </h1>
-        <p className="max-w-2xl text-lg leading-8 text-[var(--muted)]">
+        <p className="max-w-2xl text-base leading-7 text-[var(--muted)]">
           V1 không dùng contact form để tránh backend, spam và email service. Khi
           có link thật, chỉ cần cập nhật trong site config.
         </p>
@@ -47,7 +47,7 @@ export default async function ContactPage() {
               href={item.href}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
-              className="brut-card brut-press flex items-center justify-between p-5 text-lg font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+              className="brut-card brut-press flex items-center justify-between p-4 text-base font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
             >
               <span>{item.label}</span>
               <ArrowUpRight aria-hidden />
@@ -55,8 +55,8 @@ export default async function ContactPage() {
           ))}
         </section>
       ) : (
-        <section className="brut-card p-6 md:p-10">
-          <h2 className="font-display text-2xl font-bold tracking-[-0.01em]">
+        <section className="brut-card p-5 md:p-8">
+          <h2 className="font-display text-xl font-semibold tracking-[-0.005em]">
             Chưa thêm link liên hệ công khai
           </h2>
           <p className="mt-3 max-w-2xl leading-7 text-[var(--muted)]">

@@ -26,7 +26,7 @@ export function PostForm({ post }: PostFormProps) {
 
   return (
     <form
-      className="grid gap-6"
+      className="grid gap-5"
       onSubmit={(event) => {
         event.preventDefault();
         setMessage("");
@@ -66,8 +66,8 @@ export function PostForm({ post }: PostFormProps) {
         });
       }}
     >
-      <div className="brut-card grid gap-5 p-6">
-        <div className="grid gap-5 md:grid-cols-2">
+      <div className="brut-card grid gap-4 p-5">
+        <div className="grid gap-4 md:grid-cols-2">
           <Field label="Title" name="title" defaultValue={post?.title} required />
           <Field label="Slug" name="slug" defaultValue={post?.slug} required />
         </div>
@@ -79,10 +79,10 @@ export function PostForm({ post }: PostFormProps) {
           rows={3}
           required
         />
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-3">
           <Field label="Date" name="date" type="date" defaultValue={post?.date} required />
           <label className="grid gap-2">
-            <span className="text-sm font-bold">Category</span>
+            <span className="text-sm font-semibold">Category</span>
             <select
               name="category"
               defaultValue={post?.category || "Learning"}
@@ -105,13 +105,13 @@ export function PostForm({ post }: PostFormProps) {
           rows={4}
           help="Một tag mỗi dòng hoặc cách nhau bằng dấu phẩy."
         />
-        <label className="flex items-center gap-3 text-sm font-bold">
+        <label className="flex items-center gap-2.5 text-sm font-medium">
           <input name="draft" type="checkbox" defaultChecked={post?.draft} />
           Draft, ẩn khỏi public site
         </label>
       </div>
 
-      <div className="brut-card grid gap-3 p-6">
+      <div className="brut-card grid gap-3 p-5">
         <Field
           label="Markdown/MDX content"
           name="content"
@@ -126,7 +126,7 @@ export function PostForm({ post }: PostFormProps) {
         <button
           type="submit"
           disabled={pending}
-          className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-5 py-3 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {pending ? "Saving" : "Save post"}
         </button>

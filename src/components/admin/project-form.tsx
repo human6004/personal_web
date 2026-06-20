@@ -24,7 +24,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
 
   return (
     <form
-      className="grid gap-6"
+      className="grid gap-5"
       onSubmit={(event) => {
         event.preventDefault();
         setMessage("");
@@ -72,8 +72,8 @@ export function ProjectForm({ project }: ProjectFormProps) {
         });
       }}
     >
-      <div className="brut-card grid gap-5 p-6">
-        <div className="grid gap-5 md:grid-cols-2">
+      <div className="brut-card grid gap-4 p-5">
+        <div className="grid gap-4 md:grid-cols-2">
           <Field label="Title" name="title" defaultValue={project?.title} required />
           <Field label="Slug" name="slug" defaultValue={project?.slug} required />
         </div>
@@ -85,17 +85,17 @@ export function ProjectForm({ project }: ProjectFormProps) {
           rows={3}
           required
         />
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-3">
           <Field label="Year" name="year" defaultValue={project?.year || "2026"} required />
           <Field label="Role" name="role" defaultValue={project?.role} required />
           <Field label="Status" name="status" defaultValue={project?.status || "In progress"} required />
         </div>
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           <Field label="Stack" name="stack" defaultValue={project?.stack.join("\n")} multiline rows={4} />
           <Field label="Tags" name="tags" defaultValue={project?.tags.join("\n")} multiline rows={4} />
         </div>
         <Field label="Cover path" name="cover" defaultValue={project?.cover || "/images/project-portfolio.svg"} />
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           <Field label="GitHub repo URL" name="repoUrl" defaultValue={project?.repoUrl || ""} />
           <Field label="Live demo URL" name="demoUrl" defaultValue={project?.demoUrl || ""} />
           <Field label="Case study URL" name="caseStudyUrl" defaultValue={project?.caseStudyUrl || ""} />
@@ -108,19 +108,19 @@ export function ProjectForm({ project }: ProjectFormProps) {
           multiline
           rows={5}
         />
-        <div className="flex flex-wrap gap-5">
-          <label className="flex items-center gap-3 text-sm font-bold">
+        <div className="flex flex-wrap gap-4">
+          <label className="flex items-center gap-2.5 text-sm font-medium">
             <input name="featured" type="checkbox" defaultChecked={project?.featured} />
             Featured on homepage
           </label>
-          <label className="flex items-center gap-3 text-sm font-bold">
+          <label className="flex items-center gap-2.5 text-sm font-medium">
             <input name="draft" type="checkbox" defaultChecked={project?.draft} />
             Draft, ẩn khỏi public site
           </label>
         </div>
       </div>
 
-      <div className="brut-card grid gap-3 p-6">
+      <div className="brut-card grid gap-3 p-5">
         <Field
           label="Markdown/MDX case study"
           name="content"
@@ -135,7 +135,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
         <button
           type="submit"
           disabled={pending}
-          className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-5 py-3 text-sm font-bold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="brut-card brut-press rounded-[var(--radius)] bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {pending ? "Saving" : "Save project"}
         </button>

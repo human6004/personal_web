@@ -20,14 +20,14 @@ export default async function ProjectsPage() {
   const tags = Array.from(new Set(projects.flatMap((project) => project.tags)));
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:px-8">
+    <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:px-8">
       <Reveal>
-        <section className="grid gap-6">
+        <section className="grid gap-4">
           <p className="eyebrow">Work</p>
-          <h1 className="display-hero max-w-5xl">
+          <h1 className="display-section max-w-4xl">
             Project viết như những <em>case study</em> nhỏ.
           </h1>
-          <p className="max-w-3xl text-lg leading-8 text-[var(--muted)]">
+          <p className="max-w-3xl text-base leading-7 text-[var(--muted)]">
             Mỗi project không chỉ liệt kê công nghệ, mà còn ghi lại lý do làm,
             vai trò, mục tiêu, kết quả và bài học.
           </p>
@@ -35,7 +35,7 @@ export default async function ProjectsPage() {
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-[var(--radius)] border-2 border-[var(--ink)] bg-[var(--surface)] px-3 py-1 text-sm font-semibold text-[var(--ink)]"
+                className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] px-2.5 py-0.5 text-sm font-medium text-[var(--ink)]"
               >
                 {tag}
               </span>
@@ -44,7 +44,7 @@ export default async function ProjectsPage() {
         </section>
       </Reveal>
 
-      <section className="grid gap-6 lg:grid-cols-2">
+      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {projects.map((project, index) => (
           <Reveal key={project.slug} delay={index * 0.05}>
             <ProjectCard project={project} priority={index === 0} />
