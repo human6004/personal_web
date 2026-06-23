@@ -18,6 +18,11 @@ const quickActions = [
     href: "/admin/profile",
     title: "Edit profile",
     body: "Sửa tagline, social links, homepage và about."
+  },
+  {
+    href: "/admin/media",
+    title: "Media library",
+    body: "Upload, choose, and copy Cloudinary image URLs."
   }
 ];
 
@@ -51,7 +56,7 @@ export default async function AdminDashboardPage() {
           <StatCard label="Draft projects" value={draftProjects} />
         </section>
 
-        <section className="grid gap-4 md:grid-cols-3">
+        <section className="grid gap-4 md:grid-cols-4">
           {quickActions.map((item) => (
             <Link
               key={item.href}

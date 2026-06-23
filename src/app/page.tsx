@@ -49,7 +49,7 @@ export default async function HomePage() {
           <div className="relative mx-auto max-w-[560px] lg:max-w-none">
             <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-[var(--radius)] bg-[var(--accent)]" />
             <Image
-              src="/images/avatar.svg"
+              src={profile.home.avatarImage}
               alt={`Illustrated avatar for ${profile.name}`}
               width={760}
               height={760}

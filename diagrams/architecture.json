@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Personal Web Architecture",
+    "subtitle": "Next.js App Router + Neon PostgreSQL — dual content backend with admin auth",
+    "output": "architecture.html"
+  },
+  "components": [
+    { "id": "visitor", "type": "external", "label": "Visitor", "sublabel": "Browser", "pos": [40, 280], "size": [120, 60] },
+    { "id": "admin", "type": "external", "label": "Admin", "sublabel": "Browser", "pos": [40, 80], "size": [120, 60] },
+    { "id": "nextjs", "type": "backend", "label": "Next.js", "sublabel": "App Router :3000", "pos": [280, 200], "size": [140, 60] },
+    { "id": "public-pages", "type": "frontend", "label": "Public Pages", "sublabel": "SSR force-dynamic", "pos": [280, 340], "size": [140, 60] },
+    { "id": "admin-panel", "type": "frontend", "label": "Admin Panel", "sublabel": "/admin/*", "pos": [280, 80], "size": [140, 60] },
+    { "id": "auth", "type": "security", "label": "Auth Module", "sublabel": "HMAC-SHA256", "pos": [530, 80], "size": [130, 60], "tag": "session cookie" },
+    { "id": "content-layer", "type": "backend", "label": "Content Layer", "sublabel": "lib/content.ts", "pos": [530, 200], "size": [130, 60] },
+    { "id": "admin-store", "type": "backend", "label": "Admin Store", "sublabel": "db/admin-store.ts", "pos": [530, 310], "size": [130, 60] },
+    { "id": "zod", "type": "security", "label": "Zod Validator", "sublabel": "input schemas", "pos": [530, 410], "size": [130, 60], "tag": "path traversal guard" },
+    { "id": "filesystem", "type": "database", "label": "File System", "sublabel": "content/*.mdx", "pos": [780, 140], "size": [130, 60], "tag": "fallback mode" },
+    { "id": "neon", "type": "database", "label": "Neon PostgreSQL", "sublabel": "serverless driver", "pos": [780, 280], "size": [140, 60], "tag": "primary mode" },
+    { "id": "google-fonts", "type": "cloud", "label": "Google Fonts", "sublabel": "Nunito + Jakarta", "pos": [780, 410], "size": [130, 60] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Next.js Server (Node.js runtime)", "wraps": ["nextjs", "public-pages", "admin-panel", "content-layer", "admin-store", "zod"] },
+    { "kind": "security-group", "label": "Auth + Validation Boundary", "wraps": ["auth", "zod"] }
+  ],
+  "connections": [
+    { "from": "visitor", "to": "public-pages", "label": "HTTPS", "variant": "emphasis" },
+    { "from": "admin", "to": "admin-panel", "label": "HTTPS", "variant": "emphasis" },
+    { "from": "admin-panel", "to": "auth", "label": "verify session", "variant": "security", "fromSide": "right", "toSide": "left" },
+    { "from": "admin-panel", "to": "admin-store", "label": "CRUD", "fromSide": "bottom", "toSide": "top" },
+    { "from": "admin-store", "to": "zod", "variant": "security", "fromSide": "bottom", "toSide": "top" },
+    { "from": "public-pages", "to": "content-layer", "fromSide": "right", "toSide": "bottom" },
+    { "from": "content-layer", "to": "filesystem", "label": "no DATABASE_URL", "variant": "dashed", "fromSide": "right", "toSide": "left" },
+    { "from": "content-layer", "to": "neon", "label": "SQL query", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "admin-store", "to": "neon", "label": "upsert SQL", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "nextjs", "to": "google-fonts", "label": "next/font", "variant": "dashed", "fromSide": "right", "toSide": "left", "labelDy": -50 }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Dual Content Backend",
+      "items": [
+        "Local MDX files when DATABASE_URL is unset",
+        "Neon PostgreSQL when DATABASE_URL is configured",
+        "Single env var controls the entire content strategy"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Application",
+      "items": [
+        "Next.js App Router with force-dynamic SSR",
+        "MDX content rendered server-side via next-mdx-remote",
+        "Admin panel with custom HMAC-SHA256 session auth"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Security",
+      "items": [
+        "HMAC-SHA256 session tokens in httpOnly cookies",
+        "Zod validation on all admin API inputs",
+        "Path traversal protection in slug resolution"
+      ]
+    }
+  ]
+}

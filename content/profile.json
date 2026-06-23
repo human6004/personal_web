@@ -12,6 +12,7 @@
     "cv": "nhan"
   },
   "home": {
+    "avatarImage": "/images/avatar.svg",
     "heroEyebrow": "Personal portfolio + knowledge blog",
     "heroTitle": "Một nơi để viết, học và xây dựng project.",
     "heroDescription": "Mình viết, học, xây dựng project và lưu lại những điều đáng chú ý trên hành trình phát triển cá nhân.",

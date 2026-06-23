@@ -2,8 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import type { CloudinaryMediaAsset } from "@/lib/cloudinary/media";
+import {
+  cleanupUploadedAssets,
+  resolvePendingMediaValue,
+  type PendingImageUpload
+} from "@/lib/cloudinary/pending-upload";
 import type { EditableProfile } from "@/lib/profile";
 import { Field } from "./field";
+import { MediaField } from "./media/media-field";
 
 function splitLines(value: FormDataEntryValue | null) {
   return String(value || "")
@@ -12,10 +19,19 @@ function splitLines(value: FormDataEntryValue | null) {
     .filter(Boolean);
 }
 
-export function ProfileForm({ profile }: { profile: EditableProfile }) {
+export function ProfileForm({
+  profile,
+  cloudinaryFolder = "personal-web"
+}: {
+  profile: EditableProfile;
+  cloudinaryFolder?: string;
+}) {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [pending, startTransition] = useTransition();
+  const mediaFolder = `${cloudinaryFolder}/profile`;
+  const [avatarImage, setAvatarImage] = useState(profile.home.avatarImage);
+  const [avatarPending, setAvatarPending] = useState<PendingImageUpload | null>(null);
 
   return (
     <form
@@ -24,68 +40,84 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
         event.preventDefault();
         setMessage("");
         const formData = new FormData(event.currentTarget);
-        const payload: EditableProfile = {
-          name: String(formData.get("name") || ""),
-          title: String(formData.get("title") || ""),
-          description: String(formData.get("description") || ""),
-          tagline: String(formData.get("tagline") || ""),
-          englishTagline: String(formData.get("englishTagline") || ""),
-          socials: {
-            github: String(formData.get("github") || ""),
-            linkedin: String(formData.get("linkedin") || ""),
-            facebook: String(formData.get("facebook") || ""),
-            email: String(formData.get("email") || ""),
-            cv: String(formData.get("cv") || "")
-          },
-          home: {
-            heroEyebrow: String(formData.get("heroEyebrow") || ""),
-            heroTitle: String(formData.get("heroTitle") || ""),
-            heroDescription: String(formData.get("heroDescription") || ""),
-            nowTitle: String(formData.get("nowTitle") || ""),
-            nowBody: splitLines(formData.get("nowBody"))
-          },
-          about: {
-            metadataDescription: String(formData.get("metadataDescription") || ""),
-            eyebrow: String(formData.get("aboutEyebrow") || "About"),
-            title: String(formData.get("aboutTitle") || ""),
-            intro: String(formData.get("aboutIntro") || ""),
-            interestsTitle: String(formData.get("interestsTitle") || ""),
-            interests: splitLines(formData.get("interests")),
-            practicesTitle: String(formData.get("practicesTitle") || ""),
-            practices: [
-              {
-                title: String(formData.get("practice1Title") || ""),
-                body: String(formData.get("practice1Body") || "")
-              },
-              {
-                title: String(formData.get("practice2Title") || ""),
-                body: String(formData.get("practice2Body") || "")
-              },
-              {
-                title: String(formData.get("practice3Title") || ""),
-                body: String(formData.get("practice3Body") || "")
-              }
-            ].filter((item) => item.title && item.body),
-            directionTitle: String(formData.get("directionTitle") || ""),
-            directionBody: String(formData.get("directionBody") || "")
-          }
-        };
 
         startTransition(async () => {
-          const response = await fetch("/api/admin/profile", {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          });
+          const uploadedAssets: CloudinaryMediaAsset[] = [];
 
-          if (!response.ok) {
-            const data = (await response.json().catch(() => ({}))) as { error?: string };
-            setMessage(data.error || "Không lưu được profile.");
-            return;
+          try {
+            const resolvedAvatarImage = await resolvePendingMediaValue(
+              avatarImage,
+              avatarPending,
+              uploadedAssets
+            );
+            const payload: EditableProfile = {
+              name: String(formData.get("name") || ""),
+              title: String(formData.get("title") || ""),
+              description: String(formData.get("description") || ""),
+              tagline: String(formData.get("tagline") || ""),
+              englishTagline: String(formData.get("englishTagline") || ""),
+              socials: {
+                github: String(formData.get("github") || ""),
+                linkedin: String(formData.get("linkedin") || ""),
+                facebook: String(formData.get("facebook") || ""),
+                email: String(formData.get("email") || ""),
+                cv: String(formData.get("cv") || "")
+              },
+              home: {
+                avatarImage: resolvedAvatarImage || "/images/avatar.svg",
+                heroEyebrow: String(formData.get("heroEyebrow") || ""),
+                heroTitle: String(formData.get("heroTitle") || ""),
+                heroDescription: String(formData.get("heroDescription") || ""),
+                nowTitle: String(formData.get("nowTitle") || ""),
+                nowBody: splitLines(formData.get("nowBody"))
+              },
+              about: {
+                metadataDescription: String(formData.get("metadataDescription") || ""),
+                eyebrow: String(formData.get("aboutEyebrow") || "About"),
+                title: String(formData.get("aboutTitle") || ""),
+                intro: String(formData.get("aboutIntro") || ""),
+                interestsTitle: String(formData.get("interestsTitle") || ""),
+                interests: splitLines(formData.get("interests")),
+                practicesTitle: String(formData.get("practicesTitle") || ""),
+                practices: [
+                  {
+                    title: String(formData.get("practice1Title") || ""),
+                    body: String(formData.get("practice1Body") || "")
+                  },
+                  {
+                    title: String(formData.get("practice2Title") || ""),
+                    body: String(formData.get("practice2Body") || "")
+                  },
+                  {
+                    title: String(formData.get("practice3Title") || ""),
+                    body: String(formData.get("practice3Body") || "")
+                  }
+                ].filter((item) => item.title && item.body),
+                directionTitle: String(formData.get("directionTitle") || ""),
+                directionBody: String(formData.get("directionBody") || "")
+              }
+            };
+            const response = await fetch("/api/admin/profile", {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+              await cleanupUploadedAssets(uploadedAssets);
+              const data = (await response.json().catch(() => ({}))) as { error?: string };
+              setMessage(data.error || "Không lưu được profile.");
+              return;
+            }
+
+            setAvatarImage(resolvedAvatarImage);
+            setAvatarPending(null);
+            setMessage("Đã lưu profile.");
+            router.refresh();
+          } catch (error) {
+            await cleanupUploadedAssets(uploadedAssets);
+            setMessage(error instanceof Error ? error.message : "Không lưu được profile.");
           }
-
-          setMessage("Đã lưu profile.");
-          router.refresh();
         });
       }}
     >
@@ -113,6 +145,15 @@ export function ProfileForm({ profile }: { profile: EditableProfile }) {
 
       <section className="brut-card grid gap-4 p-5">
         <h2 className="font-display text-xl font-semibold tracking-[-0.005em]">Homepage</h2>
+        <MediaField
+          label="Avatar / home image"
+          name="avatarImage"
+          value={avatarImage}
+          onValueChange={setAvatarImage}
+          folder={mediaFolder}
+          onPendingChange={setAvatarPending}
+          help="This image appears in the homepage hero."
+        />
         <Field label="Hero eyebrow" name="heroEyebrow" defaultValue={profile.home.heroEyebrow} />
         <Field label="Hero title" name="heroTitle" defaultValue={profile.home.heroTitle} required />
         <Field label="Hero description" name="heroDescription" defaultValue={profile.home.heroDescription} multiline rows={3} required />

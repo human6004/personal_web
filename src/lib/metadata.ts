@@ -11,6 +11,10 @@ type BuildMetadataInput = {
 };
 
 export function absoluteUrl(path = "/") {
+  if (/^https?:\/\//i.test(path)) {
+    return path;
+  }
+
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return new URL(normalizedPath, siteConfig.url).toString();
 }

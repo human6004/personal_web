@@ -20,6 +20,7 @@ export const profileSchema = z.object({
     cv: z.string().default("")
   }),
   home: z.object({
+    avatarImage: z.string().min(1).default("/images/avatar.svg"),
     heroEyebrow: z.string().max(80).default(""),
     heroTitle: z.string().min(1).max(160),
     heroDescription: z.string().min(1).max(320),
@@ -66,6 +67,7 @@ export const defaultProfile: EditableProfile = {
     cv: ""
   },
   home: {
+    avatarImage: "/images/avatar.svg",
     heroEyebrow: "Personal portfolio + knowledge blog",
     heroTitle: "Một nơi để viết, học và xây dựng project.",
     heroDescription:
@@ -130,7 +132,7 @@ export function getProfileFromFile(root = process.cwd()): EditableProfile {
 
 export async function getProfile(root = process.cwd()): Promise<EditableProfile> {
   if (hasDatabaseUrl()) {
-    return (await getDatabaseProfile()) || defaultProfile;
+    return profileSchema.parse((await getDatabaseProfile()) || defaultProfile);
   }
 
   return getProfileFromFile(root);

@@ -5,6 +5,7 @@ const adminNav = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/posts", label: "Posts" },
   { href: "/admin/projects", label: "Projects" },
+  { href: "/admin/media", label: "Media" },
   { href: "/admin/profile", label: "Profile" }
 ];
 
@@ -21,7 +22,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               Local Admin
             </Link>
             <p className="text-sm text-[var(--muted)]">
-              Edit local MDX and profile JSON on this machine.
+              Manage content, profile, and Cloudinary media.
             </p>
           </div>
           <nav className="flex flex-wrap items-center gap-2" aria-label="Admin navigation">

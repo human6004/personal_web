@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Admin Create Post Sequence",
+    "subtitle": "Request lifecycle: auth, validation, persistence, and response",
+    "output": "sequence.html",
+    "viewBox": [920, 760]
+  },
+  "participants": [
+    { "id": "admin", "type": "external", "label": "Admin", "sublabel": "browser" },
+    { "id": "form", "type": "frontend", "label": "PostForm", "sublabel": "client component" },
+    { "id": "api", "type": "backend", "label": "API Route", "sublabel": "POST /api/admin/posts" },
+    { "id": "auth", "type": "security", "label": "Auth Guard", "sublabel": "requireAdmin()" },
+    { "id": "zod", "type": "security", "label": "Zod", "sublabel": "postInputSchema" },
+    { "id": "db", "type": "database", "label": "Neon DB", "sublabel": "serverless SQL" }
+  ],
+  "segments": [
+    { "from": 150, "to": 295, "label": "01 / AUTH" },
+    { "from": 315, "to": 465, "label": "02 / VALIDATE" },
+    { "from": 485, "to": 665, "label": "03 / PERSIST + RESPOND" }
+  ],
+  "messages": [
+    { "from": "admin", "to": "form", "y": 185, "label": "fill + submit", "variant": "default" },
+    { "from": "form", "to": "api", "y": 228, "label": "POST /api/admin/posts", "variant": "emphasis" },
+    { "from": "api", "to": "auth", "y": 270, "label": "verify cookie", "variant": "security" },
+    { "from": "auth", "to": "api", "y": 305, "label": "session valid", "variant": "return" },
+    { "from": "api", "to": "zod", "y": 354, "label": "parse(body)", "variant": "security" },
+    { "from": "zod", "to": "api", "y": 391, "label": "PostInput", "variant": "return" },
+    { "from": "api", "to": "db", "y": 443, "label": "check slug + upsert", "variant": "emphasis" },
+    { "from": "db", "to": "api", "y": 489, "label": "201 { ok, slug }", "variant": "return" },
+    { "from": "api", "to": "form", "y": 560, "label": "201 JSON", "variant": "return" },
+    { "from": "form", "to": "admin", "y": 625, "label": "redirect + refresh", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "form", "from": 220, "to": 632, "type": "frontend" },
+    { "participant": "api", "from": 228, "to": 568, "type": "backend" },
+    { "participant": "auth", "from": 265, "to": 310, "type": "security" },
+    { "participant": "zod", "from": 349, "to": 398, "type": "security" },
+    { "participant": "db", "from": 438, "to": 496, "type": "database" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Request Path",
+      "items": [
+        "Every admin write goes through auth + validation + persistence",
+        "Return messages are quieter than forward calls",
+        "Activation bars show handler lifetime"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Security Gates",
+      "items": [
+        "Cookie-based session verification first",
+        "Zod schema validation second",
+        "Slug duplicate check before upsert"
+      ]
+    },
+    {
+      "dot": "orange",
+      "title": "Response",
+      "items": [
+        "201 for new resources, 200 for updates",
+        "409 if slug already exists",
+        "401 if session is invalid"
+      ]
+    }
+  ]
+}

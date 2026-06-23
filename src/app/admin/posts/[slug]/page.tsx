@@ -3,6 +3,7 @@ import { AdminShell } from "@/components/admin/admin-shell";
 import { PostForm } from "@/components/admin/post-form";
 import { getEditablePost } from "@/lib/admin/content-store";
 import { requireAdminPage } from "@/lib/admin/server-auth";
+import { getCloudinaryUploadFolder } from "@/lib/cloudinary/server";
 
 type AdminPostEditPageProps = {
   params: Promise<{ slug: string }>;
@@ -15,6 +16,7 @@ export default async function AdminPostEditPage({
 
   const { slug } = await params;
   const post = await safeGetPost(slug);
+  const cloudinaryFolder = getCloudinaryUploadFolder();
 
   if (!post) {
     notFound();
@@ -29,7 +31,7 @@ export default async function AdminPostEditPage({
             {post.title}
           </h1>
         </section>
-        <PostForm post={post} />
+        <PostForm post={post} cloudinaryFolder={cloudinaryFolder} />
       </div>
     </AdminShell>
   );

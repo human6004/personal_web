@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Admin Content Workflow",
+    "subtitle": "Authoring, validation, persistence, and deployment flow for personal_web",
+    "output": "workflow.html"
+  },
+  "lanes": [
+    { "id": "admin", "label": "Admin" },
+    { "id": "client", "label": "Client App" },
+    { "id": "server", "label": "API Server" },
+    { "id": "validation", "label": "Validation" },
+    { "id": "storage", "label": "Storage" }
+  ],
+  "nodes": [
+    { "id": "login", "lane": "admin", "col": 0, "type": "external", "label": "Login", "sublabel": "enter password" },
+    { "id": "edit", "lane": "admin", "col": 2, "type": "frontend", "label": "Edit Content", "sublabel": "post / project" },
+    { "id": "save", "lane": "admin", "col": 5, "type": "frontend", "label": "Save", "sublabel": "submit form" },
+    { "id": "session", "lane": "client", "col": 0, "type": "security", "label": "Session Cookie", "sublabel": "HMAC token", "tag": "8h expiry" },
+    { "id": "form", "lane": "client", "col": 2, "type": "frontend", "label": "Form Component", "sublabel": "PostForm / ProjectForm" },
+    { "id": "fetch", "lane": "client", "col": 4, "type": "backend", "label": "fetch API", "sublabel": "POST / PATCH" },
+    { "id": "auth-check", "lane": "server", "col": 0, "type": "security", "label": "Auth Guard", "sublabel": "requireAdmin()", "tag": "cookie verify" },
+    { "id": "handler", "lane": "server", "col": 2, "type": "backend", "label": "Route Handler", "sublabel": "API route" },
+    { "id": "upsert", "lane": "server", "col": 4, "type": "backend", "label": "Upsert", "sublabel": "write to DB" },
+    { "id": "zod", "lane": "validation", "col": 1, "type": "security", "label": "Zod Schema", "sublabel": "input validation", "tag": "blocking" },
+    { "id": "slug-check", "lane": "validation", "col": 3, "type": "security", "label": "Slug Check", "sublabel": "duplicate guard", "tag": "409 conflict" },
+    { "id": "path-guard", "lane": "validation", "col": 5, "type": "security", "label": "Path Guard", "sublabel": "traversal block", "tag": "security" },
+    { "id": "neon", "lane": "storage", "col": 4, "type": "database", "label": "Neon DB", "sublabel": "INSERT ON CONFLICT" },
+    { "id": "redirect", "lane": "storage", "col": 5, "type": "backend", "label": "Redirect", "sublabel": "router.refresh()" }
+  ],
+  "edges": [
+    { "from": "login", "to": "session", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "session", "to": "auth-check", "variant": "security", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "edit", "to": "form", "variant": "default", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "form", "to": "fetch", "variant": "default" },
+    { "from": "fetch", "to": "auth-check", "label": "HTTP request", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "auth-check", "to": "handler", "label": "authenticated", "variant": "emphasis" },
+    { "from": "handler", "to": "zod", "label": "parse input", "variant": "security", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "zod", "to": "slug-check", "variant": "default" },
+    { "from": "slug-check", "to": "path-guard", "variant": "default" },
+    { "from": "path-guard", "to": "upsert", "label": "safe", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "upsert", "to": "neon", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "neon", "to": "redirect", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Auth Flow",
+      "items": [
+        "Custom HMAC-SHA256 session tokens",
+        "httpOnly + SameSite=strict cookies",
+        "8-hour expiry with timing-safe comparison"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Validation Chain",
+      "items": [
+        "Zod schemas validate all API inputs",
+        "Slug regex prevents path traversal",
+        "Duplicate slug check returns 409"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Persistence",
+      "items": [
+        "Upsert pattern: INSERT ON CONFLICT DO UPDATE",
+        "No delete API — draft-based hiding only",
+        "Slug rename: delete old row after upsert"
+      ]
+    }
+  ]
+}

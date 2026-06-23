@@ -3,7 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import type { Post } from "@/lib/content";
+import type { CloudinaryMediaAsset } from "@/lib/cloudinary/media";
+import {
+  cleanupUploadedAssets,
+  resolvePendingMarkdown,
+  resolvePendingMediaValue,
+  type PendingImageUpload
+} from "@/lib/cloudinary/pending-upload";
 import { Field } from "./field";
+import { MediaField } from "./media/media-field";
+import { MdxEditorField } from "./media/mdx-editor-field";
 
 const categories = ["Tech", "Learning", "Reading Notes", "Projects", "Tools", "Life"];
 
@@ -16,13 +25,19 @@ function splitList(value: FormDataEntryValue | null) {
 
 type PostFormProps = {
   post?: Post;
+  cloudinaryFolder?: string;
 };
 
-export function PostForm({ post }: PostFormProps) {
+export function PostForm({ post, cloudinaryFolder = "personal-web" }: PostFormProps) {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [pending, startTransition] = useTransition();
   const isNew = !post;
+  const mediaFolder = `${cloudinaryFolder}/posts`;
+  const [cover, setCover] = useState(post?.cover || "/images/blog-notes.svg");
+  const [coverPending, setCoverPending] = useState<PendingImageUpload | null>(null);
+  const [content, setContent] = useState(post?.content || "## Mở đầu\n\nViết nội dung ở đây.");
+  const [contentPending, setContentPending] = useState<PendingImageUpload[]>([]);
 
   return (
     <form
@@ -32,37 +47,59 @@ export function PostForm({ post }: PostFormProps) {
         setMessage("");
         const formData = new FormData(event.currentTarget);
         const slug = String(formData.get("slug") || "");
-        const payload = {
-          slug,
-          title: String(formData.get("title") || ""),
-          description: String(formData.get("description") || ""),
-          date: String(formData.get("date") || ""),
-          category: String(formData.get("category") || "Learning"),
-          tags: splitList(formData.get("tags")),
-          cover: String(formData.get("cover") || "/images/blog-notes.svg"),
-          draft: formData.get("draft") === "on",
-          content: String(formData.get("content") || "")
-        };
 
         startTransition(async () => {
-          const response = await fetch(
-            isNew ? "/api/admin/posts" : `/api/admin/posts/${post.slug}`,
-            {
-              method: isNew ? "POST" : "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload)
+          const uploadedAssets: CloudinaryMediaAsset[] = [];
+
+          try {
+            const resolvedCover = await resolvePendingMediaValue(
+              cover,
+              coverPending,
+              uploadedAssets
+            );
+            const resolvedContent = await resolvePendingMarkdown(
+              content,
+              contentPending,
+              uploadedAssets
+            );
+            const payload = {
+              slug,
+              title: String(formData.get("title") || ""),
+              description: String(formData.get("description") || ""),
+              date: String(formData.get("date") || ""),
+              category: String(formData.get("category") || "Learning"),
+              tags: splitList(formData.get("tags")),
+              cover: resolvedCover || "/images/blog-notes.svg",
+              draft: formData.get("draft") === "on",
+              content: resolvedContent
+            };
+            const response = await fetch(
+              isNew ? "/api/admin/posts" : `/api/admin/posts/${post.slug}`,
+              {
+                method: isNew ? "POST" : "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+              }
+            );
+
+            if (!response.ok) {
+              await cleanupUploadedAssets(uploadedAssets);
+              const data = (await response.json().catch(() => ({}))) as { error?: string };
+              setMessage(data.error || "Không lưu được bài viết.");
+              return;
             }
-          );
 
-          if (!response.ok) {
-            const data = (await response.json().catch(() => ({}))) as { error?: string };
-            setMessage(data.error || "Không lưu được bài viết.");
-            return;
+            setCover(resolvedCover);
+            setCoverPending(null);
+            setContent(resolvedContent);
+            setContentPending([]);
+            setMessage("Đã lưu bài viết.");
+            router.push(`/admin/posts/${slug}`);
+            router.refresh();
+          } catch (error) {
+            await cleanupUploadedAssets(uploadedAssets);
+            setMessage(error instanceof Error ? error.message : "Không lưu được bài viết.");
           }
-
-          setMessage("Đã lưu bài viết.");
-          router.push(`/admin/posts/${slug}`);
-          router.refresh();
         });
       }}
     >
@@ -95,7 +132,15 @@ export function PostForm({ post }: PostFormProps) {
               ))}
             </select>
           </label>
-          <Field label="Cover path" name="cover" defaultValue={post?.cover || "/images/blog-notes.svg"} />
+          <MediaField
+            label="Cover image"
+            name="cover"
+            value={cover}
+            onValueChange={setCover}
+            folder={mediaFolder}
+            onPendingChange={setCoverPending}
+            help="Paste a path or URL, upload a new image, or choose from the media library."
+          />
         </div>
         <Field
           label="Tags"
@@ -112,11 +157,14 @@ export function PostForm({ post }: PostFormProps) {
       </div>
 
       <div className="brut-card grid gap-3 p-5">
-        <Field
+        <MdxEditorField
           label="Markdown/MDX content"
           name="content"
-          defaultValue={post?.content || "## Mở đầu\n\nViết nội dung ở đây."}
-          multiline
+          value={content}
+          onValueChange={setContent}
+          defaultValue="## Mở đầu\n\nViết nội dung ở đây."
+          folder={mediaFolder}
+          onPendingChange={setContentPending}
           rows={18}
           required
         />

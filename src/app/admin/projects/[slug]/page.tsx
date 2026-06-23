@@ -3,6 +3,7 @@ import { AdminShell } from "@/components/admin/admin-shell";
 import { ProjectForm } from "@/components/admin/project-form";
 import { getEditableProject } from "@/lib/admin/content-store";
 import { requireAdminPage } from "@/lib/admin/server-auth";
+import { getCloudinaryUploadFolder } from "@/lib/cloudinary/server";
 
 type AdminProjectEditPageProps = {
   params: Promise<{ slug: string }>;
@@ -15,6 +16,7 @@ export default async function AdminProjectEditPage({
 
   const { slug } = await params;
   const project = await safeGetProject(slug);
+  const cloudinaryFolder = getCloudinaryUploadFolder();
 
   if (!project) {
     notFound();
@@ -29,7 +31,7 @@ export default async function AdminProjectEditPage({
             {project.title}
           </h1>
         </section>
-        <ProjectForm project={project} />
+        <ProjectForm project={project} cloudinaryFolder={cloudinaryFolder} />
       </div>
     </AdminShell>
   );

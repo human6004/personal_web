@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Content Lifecycle",
+    "subtitle": "State machine for posts and projects: draft, published, slug rename, and terminal states",
+    "output": "lifecycle.html",
+    "viewBox": [980, 660]
+  },
+  "lanes": [
+    { "id": "main", "label": "Content phases" },
+    { "id": "waiting", "label": "Interruptions" },
+    { "id": "terminal", "label": "Terminal exits" }
+  ],
+  "states": [
+    { "id": "created", "type": "start", "label": "Created", "sublabel": "new entry", "lane": "main", "col": 0, "step": "01", "tag": "entry" },
+    { "id": "draft", "type": "waiting", "label": "Draft", "sublabel": "hidden", "lane": "main", "col": 1, "step": "02", "tag": "draft: true" },
+    { "id": "published", "type": "active", "label": "Published", "sublabel": "visible", "lane": "main", "col": 2, "step": "03", "tag": "draft: false" },
+    { "id": "updated", "type": "active", "label": "Updated", "sublabel": "changed", "lane": "main", "col": 3, "step": "04", "tag": "PATCH" },
+    { "id": "renamed", "type": "decision", "label": "Renamed", "sublabel": "slug change", "lane": "main", "col": 4, "step": "05", "tag": "migration" },
+    { "id": "conflict", "type": "waiting", "label": "Conflict", "sublabel": "duplicate slug", "lane": "waiting", "col": 0, "tag": "409" },
+    { "id": "invalid", "type": "waiting", "label": "Invalid", "sublabel": "Zod reject", "lane": "waiting", "col": 1, "tag": "400" },
+    { "id": "auth-fail", "type": "failure", "label": "Auth Fail", "sublabel": "no session", "lane": "terminal", "col": 0, "tag": "401" },
+    { "id": "hidden", "type": "success", "label": "Hidden", "sublabel": "draft again", "lane": "terminal", "col": 1, "tag": "soft delete" },
+    { "id": "live", "type": "success", "label": "Live", "sublabel": "public", "lane": "terminal", "col": 2, "tag": "steady state" }
+  ],
+  "transitions": [
+    { "from": "created", "to": "draft", "variant": "emphasis" },
+    { "from": "draft", "to": "published", "variant": "emphasis" },
+    { "from": "published", "to": "updated", "variant": "default" },
+    { "from": "updated", "to": "renamed", "variant": "default" },
+    { "from": "renamed", "to": "live", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "from": "draft", "to": "conflict", "variant": "security", "fromSide": "bottom", "toSide": "top", "route": "straight" },
+    { "from": "published", "to": "invalid", "variant": "security", "fromSide": "bottom", "toSide": "top", "route": "straight" },
+    { "from": "conflict", "to": "auth-fail", "variant": "security", "fromSide": "bottom", "toSide": "top", "route": "straight" },
+    { "from": "published", "to": "hidden", "variant": "default", "fromSide": "bottom", "toSide": "top", "route": "straight" },
+    { "from": "updated", "to": "live", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "from": "invalid", "to": "draft", "variant": "dashed", "fromSide": "top", "toSide": "bottom" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Main Path",
+      "items": [
+        "Content starts as draft, then published when ready",
+        "Updates use PATCH with upsert pattern",
+        "Slug rename deletes old row after upsert"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Interruptions",
+      "items": [
+        "Slug conflict returns 409, admin must choose new slug",
+        "Validation failure returns 400 with Zod issues",
+        "Both are recoverable — admin can fix and retry"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Terminal States",
+      "items": [
+        "Auth failure is terminal — must re-login",
+        "Hidden = draft mode (soft delete, no real deletion)",
+        "Live = steady state, publicly accessible"
+      ]
+    }
+  ]
+}

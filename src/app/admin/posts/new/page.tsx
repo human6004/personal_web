@@ -1,9 +1,11 @@
 import { AdminShell } from "@/components/admin/admin-shell";
 import { PostForm } from "@/components/admin/post-form";
 import { requireAdminPage } from "@/lib/admin/server-auth";
+import { getCloudinaryUploadFolder } from "@/lib/cloudinary/server";
 
 export default async function NewAdminPostPage() {
   await requireAdminPage();
+  const cloudinaryFolder = getCloudinaryUploadFolder();
 
   return (
     <AdminShell>
@@ -14,7 +16,7 @@ export default async function NewAdminPostPage() {
             Tạo bài viết mới.
           </h1>
         </section>
-        <PostForm />
+        <PostForm cloudinaryFolder={cloudinaryFolder} />
       </div>
     </AdminShell>
   );

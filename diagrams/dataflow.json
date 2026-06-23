@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Personal Web Data Flow",
+    "subtitle": "Content authoring, dual storage, SSR rendering, and PII boundaries",
+    "output": "dataflow.html",
+    "viewBox": [1080, 720]
+  },
+  "stages": [
+    { "label": "Author" },
+    { "label": "Ingest" },
+    { "label": "Store" },
+    { "label": "Render" },
+    { "label": "Consume" }
+  ],
+  "nodes": [
+    { "id": "admin-ui", "type": "frontend", "label": "Admin Panel", "sublabel": "forms", "stage": 0, "row": 0, "tag": "auth required" },
+    { "id": "mdx-files", "type": "frontend", "label": "MDX Files", "sublabel": "local authoring", "stage": 0, "row": 2, "tag": "content/posts" },
+    { "id": "import-script", "type": "backend", "label": "Import Script", "sublabel": "db:import", "stage": 1, "row": 1, "tag": "one-time seed" },
+    { "id": "api-route", "type": "backend", "label": "API Routes", "sublabel": "/api/admin/*", "stage": 1, "row": 0, "tag": "CRUD" },
+    { "id": "zod-validate", "type": "security", "label": "Zod Validator", "sublabel": "schemas.ts", "stage": 1, "row": 3, "tag": "PII guard" },
+    { "id": "neon-db", "type": "database", "label": "Neon PostgreSQL", "sublabel": "profiles / posts / projects", "stage": 2, "row": 1, "tag": "primary store" },
+    { "id": "file-store", "type": "database", "label": "File System", "sublabel": "content/*.mdx", "stage": 2, "row": 3, "tag": "fallback store" },
+    { "id": "content-lib", "type": "backend", "label": "Content Layer", "sublabel": "lib/content.ts", "stage": 3, "row": 1, "tag": "dual read" },
+    { "id": "mdx-render", "type": "backend", "label": "MDX Renderer", "sublabel": "next-mdx-remote", "stage": 3, "row": 3, "tag": "server-side" },
+    { "id": "visitor", "type": "external", "label": "Visitor", "sublabel": "browser", "stage": 4, "row": 1, "tag": "public" },
+    { "id": "profile-data", "type": "security", "label": "Profile Data", "sublabel": "socials + email", "stage": 4, "row": 3, "tag": "PII touch" }
+  ],
+  "flows": [
+    { "from": "admin-ui", "to": "api-route", "label": "form payload", "classification": "auth-protected", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "mdx-files", "to": "import-script", "label": "local content", "classification": "non-PII", "variant": "default", "fromSide": "right", "toSide": "left" },
+    { "from": "api-route", "to": "zod-validate", "label": "raw input", "classification": "PII touch", "variant": "security", "fromSide": "bottom", "toSide": "top" },
+    { "from": "import-script", "to": "neon-db", "label": "seed data", "classification": "non-PII", "variant": "dashed", "fromSide": "right", "toSide": "left" },
+    { "from": "api-route", "to": "neon-db", "label": "upsert SQL", "classification": "auth-protected", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "zod-validate", "to": "file-store", "label": "validated slug", "classification": "non-PII", "variant": "default", "fromSide": "right", "toSide": "left" },
+    { "from": "neon-db", "to": "content-lib", "label": "SQL rows", "classification": "non-PII", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "file-store", "to": "content-lib", "label": "parsed MDX", "classification": "non-PII", "variant": "dashed", "fromSide": "right", "toSide": "left" },
+    { "from": "content-lib", "to": "mdx-render", "label": "frontmatter + body", "classification": "non-PII", "variant": "default", "fromSide": "bottom", "toSide": "top" },
+    { "from": "mdx-render", "to": "visitor", "label": "SSR HTML", "classification": "public", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "content-lib", "to": "profile-data", "label": "social links", "classification": "PII touch", "variant": "security", "fromSide": "bottom", "toSide": "top", "labelDx": 60 }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Primary Data Path",
+      "items": [
+        "Content authored via Admin Panel or local MDX files",
+        "Neon PostgreSQL is the primary store when DATABASE_URL is set",
+        "Content Layer abstracts the dual-backend strategy"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "PII Boundary",
+      "items": [
+        "Profile data contains social links and email (optional PII)",
+        "Zod validation guards all admin input paths",
+        "Contact page avoids forms to prevent PII collection"
+      ]
+    },
+    {
+      "dot": "orange",
+      "title": "Fallback Path",
+      "items": [
+        "File System store used when no DATABASE_URL",
+        "Import script seeds Neon from local MDX files",
+        "Both paths converge at the Content Layer"
+      ]
+    }
+  ]
+}

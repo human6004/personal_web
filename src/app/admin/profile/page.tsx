@@ -1,12 +1,14 @@
 import { AdminShell } from "@/components/admin/admin-shell";
 import { ProfileForm } from "@/components/admin/profile-form";
 import { requireAdminPage } from "@/lib/admin/server-auth";
+import { getCloudinaryUploadFolder } from "@/lib/cloudinary/server";
 import { getProfile } from "@/lib/profile";
 
 export default async function AdminProfilePage() {
   await requireAdminPage();
 
   const profile = await getProfile();
+  const cloudinaryFolder = getCloudinaryUploadFolder();
 
   return (
     <AdminShell>
@@ -21,7 +23,7 @@ export default async function AdminProfilePage() {
             public website đọc lại.
           </p>
         </section>
-        <ProfileForm profile={profile} />
+        <ProfileForm profile={profile} cloudinaryFolder={cloudinaryFolder} />
       </div>
     </AdminShell>
   );
