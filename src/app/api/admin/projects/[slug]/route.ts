@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getProjectBySlug } from "@/lib/content";
-import { requireAdmin, serverErrorResponse, validationErrorResponse } from "@/lib/admin/api";
+import { handleRouteError, requireAdmin } from "@/lib/admin/api";
 import { renameProjectSlug, writeProject } from "@/lib/admin/content-store";
 import { validateSlug } from "@/lib/admin/paths";
 import { projectInputSchema } from "@/lib/admin/schemas";
@@ -35,8 +35,6 @@ export async function PATCH(request: Request, context: RouteContext) {
     await renameProjectSlug(previousSlug, input.slug);
     return NextResponse.json({ ok: true, slug: input.slug });
   } catch (error) {
-    return "issues" in Object(error)
-      ? validationErrorResponse(error)
-      : serverErrorResponse();
+    return handleRouteError(error);
   }
 }

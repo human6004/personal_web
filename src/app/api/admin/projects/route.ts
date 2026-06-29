@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getProjectBySlug } from "@/lib/content";
-import { requireAdmin, serverErrorResponse, validationErrorResponse } from "@/lib/admin/api";
+import { handleRouteError, requireAdmin } from "@/lib/admin/api";
 import { writeProject } from "@/lib/admin/content-store";
 import { projectInputSchema } from "@/lib/admin/schemas";
 
@@ -24,8 +24,6 @@ export async function POST(request: Request) {
     await writeProject(input);
     return NextResponse.json({ ok: true, slug: input.slug }, { status: 201 });
   } catch (error) {
-    return "issues" in Object(error)
-      ? validationErrorResponse(error)
-      : serverErrorResponse();
+    return handleRouteError(error);
   }
 }

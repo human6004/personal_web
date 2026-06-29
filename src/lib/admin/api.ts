@@ -21,7 +21,7 @@ export function unauthorizedResponse() {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 }
 
-export function validationErrorResponse(error: unknown) {
+function validationErrorResponse(error: unknown) {
   if (error instanceof ZodError) {
     return NextResponse.json(
       {
@@ -38,8 +38,33 @@ export function validationErrorResponse(error: unknown) {
   return NextResponse.json({ error: "Invalid request" }, { status: 400 });
 }
 
-export function serverErrorResponse() {
+function serverErrorResponse() {
   return NextResponse.json({ error: "Could not save content" }, { status: 500 });
+}
+
+function isInvalidSlugError(error: unknown): error is Error {
+  return error instanceof Error && error.message.startsWith("Invalid slug");
+}
+
+function isMalformedJsonError(error: unknown) {
+  return error instanceof SyntaxError;
+}
+
+export function handleRouteError(error: unknown) {
+  if (error instanceof ZodError) {
+    return validationErrorResponse(error);
+  }
+
+  if (isInvalidSlugError(error)) {
+    return NextResponse.json({ error: error.message }, { status: 400 });
+  }
+
+  if (isMalformedJsonError(error)) {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  console.error("Admin route error:", error);
+  return serverErrorResponse();
 }
 
 export function requireAdmin(request: Request) {

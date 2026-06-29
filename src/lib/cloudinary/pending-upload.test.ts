@@ -84,7 +84,7 @@ describe("pending Cloudinary uploads", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
 
-    const uploaded = [];
+    const uploaded: (typeof uploadedAsset)[] = [];
     await expect(
       resolvePendingMediaValue("pending://cover", pendingUpload("cover"), uploaded)
     ).resolves.toBe(uploadedAsset.secureUrl);

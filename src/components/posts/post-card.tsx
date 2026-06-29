@@ -9,7 +9,7 @@ type PostCardProps = {
 
 export function PostCard({ post, priority = false }: PostCardProps) {
   return (
-    <article className="brut-card brut-press grid h-full overflow-hidden">
+    <article className="brut-card brut-press group grid h-full overflow-hidden">
       <Link
         href={`/blog/${post.slug}`}
         className="block overflow-hidden border-b-[var(--border-w)] border-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
@@ -22,7 +22,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
           height={560}
           priority={priority}
           unoptimized
-          className="aspect-[16/7] w-full object-cover"
+          className="aspect-[16/7] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transform-none"
         />
       </Link>
       <div className="grid gap-2.5 p-4">

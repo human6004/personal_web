@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ProjectCard } from "@/components/projects/project-card";
 import { Reveal } from "@/components/sections/reveal";
+import { Badge } from "@/components/ui/badge";
 import { getAllProjects } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
@@ -33,12 +34,7 @@ export default async function ProjectsPage() {
           </p>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] px-2.5 py-0.5 text-sm font-medium text-[var(--ink)]"
-              >
-                {tag}
-              </span>
+              <Badge key={tag}>{tag}</Badge>
             ))}
           </div>
         </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PostCard } from "@/components/posts/post-card";
 import { Reveal } from "@/components/sections/reveal";
+import { Badge } from "@/components/ui/badge";
 import { getAllPosts } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
@@ -33,12 +34,7 @@ export default async function BlogPage() {
           </p>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
-              <span
-                key={category}
-                className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] px-2.5 py-0.5 text-sm font-medium text-[var(--ink)]"
-              >
-                {category}
-              </span>
+              <Badge key={category}>{category}</Badge>
             ))}
           </div>
         </section>

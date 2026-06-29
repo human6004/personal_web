@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireAdmin, serverErrorResponse, validationErrorResponse } from "@/lib/admin/api";
+import { handleRouteError, requireAdmin } from "@/lib/admin/api";
 import { writeEditableProfile } from "@/lib/admin/content-store";
 import { profileInputSchema } from "@/lib/admin/schemas";
 
@@ -18,8 +18,6 @@ export async function PATCH(request: Request) {
     await writeEditableProfile(input);
     return NextResponse.json({ ok: true });
   } catch (error) {
-    return "issues" in Object(error)
-      ? validationErrorResponse(error)
-      : serverErrorResponse();
+    return handleRouteError(error);
   }
 }

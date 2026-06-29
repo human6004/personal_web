@@ -4,11 +4,19 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { List, X } from "@phosphor-icons/react/dist/ssr";
+import { clsx } from "clsx";
 import { siteConfig } from "@/lib/site";
 
 type HeaderProps = {
   name: string;
 };
+
+function isActiveRoute(pathname: string, href: string) {
+  if (href === "/") {
+    return pathname === "/";
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function Header({ name }: HeaderProps) {
   const [open, setOpen] = useState(false);
@@ -33,15 +41,24 @@ export function Header({ name }: HeaderProps) {
           aria-label="Primary navigation"
           className="hidden items-center gap-1 md:flex"
         >
-          {siteConfig.navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-[var(--radius)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] sm:px-3.5"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {siteConfig.navItems.map((item) => {
+            const active = isActiveRoute(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={clsx(
+                  "rounded-[var(--radius)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] sm:px-3.5",
+                  active
+                    ? "bg-[var(--pop)]"
+                    : "hover:bg-[var(--accent)]"
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <button
@@ -56,24 +73,41 @@ export function Header({ name }: HeaderProps) {
         </button>
       </div>
 
-      {open ? (
+      <div
+        className={clsx(
+          "grid overflow-hidden transition-[grid-template-rows,opacity] duration-200 ease-out md:hidden",
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        )}
+      >
         <nav
           id="mobile-menu"
           aria-label="Mobile navigation"
-          className="border-b-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] md:hidden"
+          aria-hidden={!open}
+          className={clsx(
+            "min-h-0 overflow-hidden border-b-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)]",
+            open ? "" : "pointer-events-none"
+          )}
         >
-          {siteConfig.navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="flex min-h-[48px] items-center border-t-[var(--border-w)] border-[var(--ink)] px-4 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--ink)] sm:px-6"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {siteConfig.navItems.map((item) => {
+            const active = isActiveRoute(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                aria-current={active ? "page" : undefined}
+                tabIndex={open ? undefined : -1}
+                className={clsx(
+                  "flex min-h-[48px] items-center border-t-[var(--border-w)] border-[var(--ink)] px-4 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--ink)] sm:px-6",
+                  active ? "bg-[var(--pop)]" : ""
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
-      ) : null}
+      </div>
     </header>
   );
 }

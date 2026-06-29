@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { ProjectLinks } from "@/components/projects/project-links";
+import { Badge } from "@/components/ui/badge";
 import { InternalLink } from "@/components/ui/internal-link";
 import { getProjectBySlug, isPrivateRepo } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
@@ -52,11 +53,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         <div className="grid gap-5">
           <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
             <span>{project.year}</span>
-            <span aria-hidden>/</span>
+            <span aria-hidden className="text-[var(--accent)]">·</span>
             <span>{project.status}</span>
             {privateRepo ? (
               <>
-                <span aria-hidden>/</span>
+                <span aria-hidden className="text-[var(--accent)]">·</span>
                 <span>Private repo</span>
               </>
             ) : null}
@@ -89,12 +90,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             <p className="text-sm text-[var(--muted)]">Stack</p>
             <div className="mt-2 flex flex-wrap gap-2">
               {project.stack.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] px-2.5 py-0.5 text-sm font-medium"
-                >
-                  {item}
-                </span>
+                <Badge key={item}>{item}</Badge>
               ))}
             </div>
           </div>

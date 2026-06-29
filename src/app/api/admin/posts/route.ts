@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPostBySlug } from "@/lib/content";
-import { requireAdmin, serverErrorResponse, validationErrorResponse } from "@/lib/admin/api";
+import { handleRouteError, requireAdmin } from "@/lib/admin/api";
 import { writePost } from "@/lib/admin/content-store";
 import { postInputSchema } from "@/lib/admin/schemas";
 
@@ -24,12 +24,6 @@ export async function POST(request: Request) {
     await writePost(input);
     return NextResponse.json({ ok: true, slug: input.slug }, { status: 201 });
   } catch (error) {
-    if (error instanceof Error && error.message.includes("Invalid slug")) {
-      return validationErrorResponse(error);
-    }
-
-    return "issues" in Object(error)
-      ? validationErrorResponse(error)
-      : serverErrorResponse();
+    return handleRouteError(error);
   }
 }

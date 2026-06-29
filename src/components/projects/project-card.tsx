@@ -23,7 +23,7 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
           height={620}
           priority={priority}
           unoptimized
-          className="aspect-[16/6.5] w-full object-cover"
+          className="aspect-[16/6.5] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transform-none"
         />
       </Link>
       <div className="flex h-full flex-col gap-2.5 p-3.5 sm:p-4">
