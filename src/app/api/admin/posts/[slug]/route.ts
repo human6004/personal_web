@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPostBySlug } from "@/lib/content";
 import { handleRouteError, requireAdmin } from "@/lib/admin/api";
-import { renamePostSlug, writePost } from "@/lib/admin/content-store";
+import { writePost } from "@/lib/admin/content-store";
 import { validateSlug } from "@/lib/admin/paths";
 import { postInputSchema } from "@/lib/admin/schemas";
 
@@ -31,8 +31,7 @@ export async function PATCH(request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Slug already exists" }, { status: 409 });
     }
 
-    await writePost(input);
-    await renamePostSlug(previousSlug, input.slug);
+    await writePost(input, previousSlug);
     return NextResponse.json({ ok: true, slug: input.slug });
   } catch (error) {
     return handleRouteError(error);

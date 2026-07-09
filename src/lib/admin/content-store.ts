@@ -2,8 +2,6 @@ export {
   getAdminContent,
   getEditablePost,
   getEditableProject,
-  renamePostSlug,
-  renameProjectSlug,
   writeEditableProfile,
   writePost,
   writeProject

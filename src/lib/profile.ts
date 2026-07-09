@@ -9,12 +9,24 @@ const stringArray = z.array(z.string());
 // URL/handle do admin nhập rồi đổ thẳng vào <a href>. Chặn các protocol có thể
 // chạy script (javascript:/data:/vbscript:) -> self-XSS. Cho phép phần còn lại
 // (https, mailto, path nội bộ, username thô) để không phá dữ liệu sẵn có.
-const dangerousProtocol = /^\s*(javascript|data|vbscript):/i;
+// Dùng new URL() để lấy protocol thật sau khi trình duyệt chuẩn hoá (chứ không
+// regex trên chuỗi thô) - tránh bị bypass bằng tab/newline chèn giữa từ khoá
+// protocol, vd "java\tscript:alert(1)" vẫn resolve thành javascript:.
+const dangerousProtocols = new Set(["javascript:", "data:", "vbscript:"]);
+
+function hasDangerousProtocol(value: string) {
+  try {
+    return dangerousProtocols.has(new URL(value).protocol);
+  } catch {
+    // Không parse được thành URL tuyệt đối (path nội bộ, username thô, v.v.) -> an toàn.
+    return false;
+  }
+}
 
 export const urlOrEmpty = z
   .string()
   .trim()
-  .refine((value) => !dangerousProtocol.test(value), "This URL is not allowed.")
+  .refine((value) => !hasDangerousProtocol(value), "This URL is not allowed.")
   .default("");
 
 export const profileSchema = z.object({

@@ -11,15 +11,7 @@ import {
 import { validateSlug } from "@/lib/admin/paths";
 import { dbQuery } from "./neon";
 
-export async function writePost(input: PostInput) {
-  const parsed = postInputSchema.parse(input);
-
-  await dbQuery(
-    `insert into posts (
-       slug, title, description, content, date, category, tags, cover, draft
-     )
-     values ($1, $2, $3, $4, $5::date, $6, $7::text[], $8, $9)
-     on conflict (slug) do update set
+const postUpsertColumns = `
        title = excluded.title,
        description = excluded.description,
        content = excluded.content,
@@ -28,36 +20,53 @@ export async function writePost(input: PostInput) {
        tags = excluded.tags,
        cover = excluded.cover,
        draft = excluded.draft,
-       updated_at = now()`,
-    [
-      parsed.slug,
-      parsed.title,
-      parsed.description,
-      parsed.content,
-      parsed.date,
-      parsed.category,
-      parsed.tags,
-      parsed.cover,
-      parsed.draft
-    ]
-  );
+       updated_at = now()`;
+
+// Rename dùng chung 1 statement (CTE delete + insert) để atomic trong 1 round-trip
+// HTTP tới Neon - tránh tình trạng insert xong crash trước khi xoá row cũ, để lại
+// 2 bản ghi trùng slug cũ/mới vĩnh viễn.
+export async function writePost(input: PostInput, previousSlug?: string) {
+  const parsed = postInputSchema.parse(input);
+  const isRename = Boolean(previousSlug && previousSlug !== parsed.slug);
+
+  const query = isRename
+    ? `with deleted as (
+         delete from posts where slug = $10
+         returning 1
+       )
+       insert into posts (
+         slug, title, description, content, date, category, tags, cover, draft
+       )
+       values ($1, $2, $3, $4, $5::date, $6, $7::text[], $8, $9)
+       on conflict (slug) do update set${postUpsertColumns}`
+    : `insert into posts (
+         slug, title, description, content, date, category, tags, cover, draft
+       )
+       values ($1, $2, $3, $4, $5::date, $6, $7::text[], $8, $9)
+       on conflict (slug) do update set${postUpsertColumns}`;
+
+  const params: unknown[] = [
+    parsed.slug,
+    parsed.title,
+    parsed.description,
+    parsed.content,
+    parsed.date,
+    parsed.category,
+    parsed.tags,
+    parsed.cover,
+    parsed.draft
+  ];
+
+  if (isRename) {
+    params.push(previousSlug);
+  }
+
+  await dbQuery(query, params);
 
   return parsed;
 }
 
-export async function writeProject(input: ProjectInput) {
-  const parsed = projectInputSchema.parse(input);
-
-  await dbQuery(
-    `insert into projects (
-       slug, title, summary, content, year, role, stack, tags, status, cover,
-       repo_url, demo_url, case_study_url, external_url, highlights, featured, draft
-     )
-     values (
-       $1, $2, $3, $4, $5, $6, $7::text[], $8::text[], $9, $10,
-       $11, $12, $13, $14, $15::text[], $16, $17
-     )
-     on conflict (slug) do update set
+const projectUpsertColumns = `
        title = excluded.title,
        summary = excluded.summary,
        content = excluded.content,
@@ -74,45 +83,63 @@ export async function writeProject(input: ProjectInput) {
        highlights = excluded.highlights,
        featured = excluded.featured,
        draft = excluded.draft,
-       updated_at = now()`,
-    [
-      parsed.slug,
-      parsed.title,
-      parsed.summary,
-      parsed.content,
-      parsed.year,
-      parsed.role,
-      parsed.stack,
-      parsed.tags,
-      parsed.status,
-      parsed.cover,
-      parsed.repoUrl,
-      parsed.demoUrl,
-      parsed.caseStudyUrl,
-      parsed.externalUrl,
-      parsed.highlights,
-      parsed.featured,
-      parsed.draft
-    ]
-  );
+       updated_at = now()`;
+
+export async function writeProject(input: ProjectInput, previousSlug?: string) {
+  const parsed = projectInputSchema.parse(input);
+  const isRename = Boolean(previousSlug && previousSlug !== parsed.slug);
+
+  const query = isRename
+    ? `with deleted as (
+         delete from projects where slug = $18
+         returning 1
+       )
+       insert into projects (
+         slug, title, summary, content, year, role, stack, tags, status, cover,
+         repo_url, demo_url, case_study_url, external_url, highlights, featured, draft
+       )
+       values (
+         $1, $2, $3, $4, $5, $6, $7::text[], $8::text[], $9, $10,
+         $11, $12, $13, $14, $15::text[], $16, $17
+       )
+       on conflict (slug) do update set${projectUpsertColumns}`
+    : `insert into projects (
+         slug, title, summary, content, year, role, stack, tags, status, cover,
+         repo_url, demo_url, case_study_url, external_url, highlights, featured, draft
+       )
+       values (
+         $1, $2, $3, $4, $5, $6, $7::text[], $8::text[], $9, $10,
+         $11, $12, $13, $14, $15::text[], $16, $17
+       )
+       on conflict (slug) do update set${projectUpsertColumns}`;
+
+  const params: unknown[] = [
+    parsed.slug,
+    parsed.title,
+    parsed.summary,
+    parsed.content,
+    parsed.year,
+    parsed.role,
+    parsed.stack,
+    parsed.tags,
+    parsed.status,
+    parsed.cover,
+    parsed.repoUrl,
+    parsed.demoUrl,
+    parsed.caseStudyUrl,
+    parsed.externalUrl,
+    parsed.highlights,
+    parsed.featured,
+    parsed.draft
+  ];
+
+  if (isRename) {
+    params.push(previousSlug);
+  }
+
+  await dbQuery(query, params);
 
   return parsed;
-}
-
-export async function renamePostSlug(previousSlug: string, nextSlug: string) {
-  if (previousSlug === nextSlug) {
-    return;
-  }
-
-  await dbQuery(`delete from posts where slug = $1`, [previousSlug]);
-}
-
-export async function renameProjectSlug(previousSlug: string, nextSlug: string) {
-  if (previousSlug === nextSlug) {
-    return;
-  }
-
-  await dbQuery(`delete from projects where slug = $1`, [previousSlug]);
 }
 
 export async function writeEditableProfile(input: ProfileInput) {

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getProjectBySlug } from "@/lib/content";
 import { handleRouteError, requireAdmin } from "@/lib/admin/api";
-import { renameProjectSlug, writeProject } from "@/lib/admin/content-store";
+import { writeProject } from "@/lib/admin/content-store";
 import { validateSlug } from "@/lib/admin/paths";
 import { projectInputSchema } from "@/lib/admin/schemas";
 
@@ -31,8 +31,7 @@ export async function PATCH(request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Slug already exists" }, { status: 409 });
     }
 
-    await writeProject(input);
-    await renameProjectSlug(previousSlug, input.slug);
+    await writeProject(input, previousSlug);
     return NextResponse.json({ ok: true, slug: input.slug });
   } catch (error) {
     return handleRouteError(error);

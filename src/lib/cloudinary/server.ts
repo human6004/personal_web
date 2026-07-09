@@ -210,6 +210,12 @@ export function signCloudinaryUploadParams(paramsToSign: unknown) {
     params.folder = assertCloudinaryUploadFolder(params.folder, { allowRoot: true });
   }
 
+  // public_id điều khiển cả path lưu trên Cloudinary; nếu không validate, client có thể
+  // ký một public_id ngoài upload folder (hoặc trùng asset khác) và overwrite nó.
+  if (typeof params.public_id === "string") {
+    params.public_id = assertCloudinaryUploadFolder(params.public_id, { allowRoot: true });
+  }
+
   return cloudinary.utils.api_sign_request(params, settings.apiSecret);
 }
 
