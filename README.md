@@ -161,6 +161,27 @@ Project phù hợp để deploy lên Vercel:
 4. Chạy schema/import cho Neon nếu database production chưa có dữ liệu.
 5. Deploy.
 
+### Bảo mật khi deploy
+
+- **Bắt buộc đổi secret mặc định.** `ADMIN_PASSWORD` cần ít nhất 8 ký tự và
+  `ADMIN_SESSION_SECRET` ít nhất 16 ký tự. Nếu để nguyên giá trị mẫu
+  (`change-me`, `change-me-long-random-string`) hoặc quá ngắn, app tự coi như
+  chưa cấu hình và **chặn mọi đăng nhập admin** (fail-closed), nên admin sẽ
+  không thể mở bằng mật khẩu ai cũng đoán được.
+- Sinh secret mạnh:
+
+  ```powershell
+  # session secret ngẫu nhiên
+  node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+  ```
+
+- Không bao giờ commit `.env.local`. Chỉ đặt secret trong Vercel Environment
+  Variables (scope Production/Preview).
+- `CLOUDINARY_API_SECRET` là server-side, không thêm prefix `NEXT_PUBLIC_`.
+- Response đã kèm sẵn security headers (`X-Content-Type-Options`,
+  `X-Frame-Options: DENY`, `Referrer-Policy`, `Strict-Transport-Security`,
+  `Permissions-Policy`) cấu hình trong `next.config.mjs`.
+
 Khi website đã dùng Neon, việc sửa nội dung trong `/admin` không cần redeploy.
 Những thay đổi trong source code vẫn đi qua luồng GitHub -> Vercel như bình
 thường.

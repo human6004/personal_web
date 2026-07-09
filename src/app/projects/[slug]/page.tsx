@@ -5,6 +5,8 @@ import { MdxContent } from "@/components/mdx/mdx-content";
 import { ProjectLinks } from "@/components/projects/project-links";
 import { Badge } from "@/components/ui/badge";
 import { InternalLink } from "@/components/ui/internal-link";
+import { Meta } from "@/components/ui/meta";
+import { Reveal } from "@/components/sections/reveal";
 import { getProjectBySlug, isPrivateRepo } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
@@ -48,40 +50,39 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
   return (
     <article className="mx-auto grid max-w-7xl gap-9 px-4 py-12 sm:px-6 lg:px-8">
-      <section className="grid gap-6">
+      <Reveal className="grid gap-6">
         <InternalLink href="/projects">Back to projects</InternalLink>
         <div className="grid gap-5">
-          <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
-            <span>{project.year}</span>
-            <span aria-hidden className="text-[var(--accent)]">·</span>
-            <span>{project.status}</span>
-            {privateRepo ? (
-              <>
-                <span aria-hidden className="text-[var(--accent)]">·</span>
-                <span>Private repo</span>
-              </>
-            ) : null}
-          </div>
+          <Meta
+            size="detail"
+            items={[
+              project.year,
+              project.status,
+              ...(privateRepo ? ["Private repo"] : [])
+            ]}
+          />
           <h1 className="display-hero max-w-5xl">{project.title}</h1>
           <p className="max-w-3xl text-base leading-7 text-[var(--muted)]">
             {project.summary}
           </p>
           <ProjectLinks project={project} showCaseStudy={false} />
         </div>
-      </section>
+      </Reveal>
 
-      <Image
-        src={project.cover}
-        alt={`Visual for ${project.title}`}
-        width={1400}
-        height={860}
-        priority
-        unoptimized
-        className="rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] shadow-[var(--shadow)]"
-      />
+      <Reveal delay={0.05}>
+        <Image
+          src={project.cover}
+          alt={`Visual for ${project.title}`}
+          width={1400}
+          height={860}
+          priority
+          unoptimized
+          className="w-full rounded-[var(--radius)] border-[var(--border-w)] border-[var(--ink)] bg-[var(--surface)] shadow-[var(--shadow)]"
+        />
+      </Reveal>
 
       <section className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
-        <aside className="brut-card grid h-fit gap-3.5 p-5">
+        <aside className="brut-card grid h-fit gap-3.5 p-5 lg:sticky lg:top-20">
           <div>
             <p className="text-sm text-[var(--muted)]">Role</p>
             <p className="mt-1 font-medium">{project.role}</p>

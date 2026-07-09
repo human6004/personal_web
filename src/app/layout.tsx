@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Nunito_Sans, Plus_Jakarta_Sans } from "next/font/google";
+import { JetBrains_Mono, Nunito_Sans, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -23,6 +23,12 @@ const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "vietnamese"],
   display: "swap",
   variable: "--font-sans"
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono"
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -73,15 +79,28 @@ export default async function RootLayout({
     <html
       lang="vi"
       data-scroll-behavior="smooth"
-      className={`${nunitoSans.variable} ${jakarta.variable}`}
+      suppressHydrationWarning
+      className={`${nunitoSans.variable} ${jakarta.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        <script
+          // Set theme before paint to avoid a flash of the wrong theme.
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`
+          }}
+        />
+      </head>
       <body>
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
         <Header name={profile.name} />
         <main id="main-content">{children}</main>
-        <Footer name={profile.name} tagline={profile.tagline} />
+        <Footer
+          name={profile.name}
+          tagline={profile.tagline}
+          socials={profile.socials}
+        />
       </body>
     </html>
   );

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { PostCard } from "@/components/posts/post-card";
 import { Reveal } from "@/components/sections/reveal";
-import { Badge } from "@/components/ui/badge";
+import { BlogList } from "@/components/posts/blog-list";
 import { getAllPosts } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
@@ -30,23 +29,12 @@ export default async function BlogPage() {
           </h1>
           <p className="max-w-3xl text-base leading-7 text-[var(--muted)]">
             Các bài viết ngắn về công nghệ, học tập, đọc sách, project, công cụ
-            và đời sống. V1 giữ mọi thứ đơn giản để dễ viết đều.
+            và đời sống. Chọn một chủ đề bên dưới để lọc.
           </p>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Badge key={category}>{category}</Badge>
-            ))}
-          </div>
         </section>
       </Reveal>
 
-      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {posts.map((post, index) => (
-          <Reveal key={post.slug} delay={index * 0.05}>
-            <PostCard post={post} priority={index === 0} />
-          </Reveal>
-        ))}
-      </section>
+      <BlogList posts={posts} categories={categories} />
     </div>
   );
 }

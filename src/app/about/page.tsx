@@ -37,12 +37,15 @@ export default async function AboutPage() {
           <h2 className="display-section">{about.interestsTitle}</h2>
         </Reveal>
         <Reveal delay={0.05}>
-          <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3">
-            {about.interests.map((interest) => (
+          <div className="flex flex-wrap gap-2.5">
+            {about.interests.map((interest, index) => (
               <div
                 key={interest}
-                className="brut-card rounded-[var(--radius)] p-3.5 text-sm font-semibold"
+                className="brut-card inline-flex items-center gap-2 rounded-[var(--radius)] px-3.5 py-2 text-sm font-semibold"
               >
+                <span aria-hidden className="mono text-xs text-[var(--muted)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 {interest}
               </div>
             ))}
@@ -52,17 +55,23 @@ export default async function AboutPage() {
 
       <section className="grid gap-6">
         <Reveal className="grid gap-2.5">
-          <p className="eyebrow">How I work</p>
+          <p className="eyebrow eyebrow--plain">How I work</p>
           <h2 className="display-section">{about.practicesTitle}</h2>
         </Reveal>
         <div className="grid gap-3.5 md:grid-cols-3">
           {about.practices.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.05}>
-              <article className="brut-card h-full p-5">
+              <article className="brut-card grid h-full gap-3 p-5">
+                <span
+                  aria-hidden
+                  className="mono text-2xl font-bold text-[var(--accent)]"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <h3 className="font-display text-lg font-semibold tracking-[-0.005em]">
                   {item.title}
                 </h3>
-                <p className="mt-3 leading-7 text-[var(--muted)]">{item.body}</p>
+                <p className="leading-7 text-[var(--muted)]">{item.body}</p>
               </article>
             </Reveal>
           ))}
@@ -71,7 +80,7 @@ export default async function AboutPage() {
 
       <Reveal>
         <section className="brut-card grid gap-4 p-5 md:p-10">
-          <p className="eyebrow">What's next</p>
+          <p className="eyebrow eyebrow--plain">What's next</p>
           <h2 className="display-section">{about.directionTitle}</h2>
           <p className="max-w-3xl text-base leading-7 text-[var(--muted)]">
             {about.directionBody}

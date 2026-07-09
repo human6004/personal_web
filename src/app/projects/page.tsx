@@ -3,6 +3,7 @@ import { ProjectCard } from "@/components/projects/project-card";
 import { Reveal } from "@/components/sections/reveal";
 import { Badge } from "@/components/ui/badge";
 import { getAllProjects } from "@/lib/content";
+import { categoryColor } from "@/lib/category";
 import { buildMetadata } from "@/lib/metadata";
 
 export const dynamic = "force-dynamic";
@@ -34,7 +35,9 @@ export default async function ProjectsPage() {
           </p>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
+              <Badge key={tag} accent={categoryColor(tag)}>
+                {tag}
+              </Badge>
             ))}
           </div>
         </section>

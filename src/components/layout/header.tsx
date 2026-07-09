@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { List, X } from "@phosphor-icons/react/dist/ssr";
 import { clsx } from "clsx";
 import { siteConfig } from "@/lib/site";
+import { ThemeToggle } from "./theme-toggle";
 
 type HeaderProps = {
   name: string;
@@ -37,40 +38,44 @@ export function Header({ name }: HeaderProps) {
           <span aria-hidden className="text-[var(--accent)]">.</span>
         </Link>
 
-        <nav
-          aria-label="Primary navigation"
-          className="hidden items-center gap-1 md:flex"
-        >
-          {siteConfig.navItems.map((item) => {
-            const active = isActiveRoute(pathname, item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                className={clsx(
-                  "rounded-[var(--radius)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] sm:px-3.5",
-                  active
-                    ? "bg-[var(--pop)]"
-                    : "hover:bg-[var(--accent)]"
-                )}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="flex items-center gap-2">
+          <nav
+            aria-label="Primary navigation"
+            className="hidden items-center gap-1 md:flex"
+          >
+            {siteConfig.navItems.map((item) => {
+              const active = isActiveRoute(pathname, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={clsx(
+                    "rounded-[var(--radius)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] sm:px-3.5",
+                    active
+                      ? "bg-[var(--pop)]"
+                      : "hover:bg-[var(--accent)]"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-        <button
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          className="brut-card brut-press grid h-9 w-9 place-items-center rounded-[var(--radius)] bg-[var(--surface)] text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] md:hidden"
-        >
-          {open ? <X size={18} weight="bold" /> : <List size={18} weight="bold" />}
-        </button>
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            className="brut-card brut-press grid h-9 w-9 place-items-center rounded-[var(--radius)] bg-[var(--surface)] text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] md:hidden"
+          >
+            {open ? <X size={18} weight="bold" /> : <List size={18} weight="bold" />}
+          </button>
+        </div>
       </div>
 
       <div

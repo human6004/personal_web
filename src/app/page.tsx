@@ -1,9 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/sections/reveal";
+import { StaggerText } from "@/components/sections/stagger-text";
 import { InternalLink } from "@/components/ui/internal-link";
-import { PostCard } from "@/components/posts/post-card";
+import { Meta } from "@/components/ui/meta";
 import { ProjectCard } from "@/components/projects/project-card";
+import { categoryColor } from "@/lib/category";
 import { getAllPosts, getFeaturedProjects } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 import { getProfile } from "@/lib/profile";
@@ -31,7 +34,10 @@ export default async function HomePage() {
         <Reveal className="grid gap-7">
           <div className="grid gap-5">
             <p className="eyebrow">{profile.home.heroEyebrow}</p>
-            <h1 className="display-hero max-w-4xl">{profile.home.heroTitle}</h1>
+            <StaggerText
+              text={profile.home.heroTitle}
+              className="display-hero max-w-4xl"
+            />
             <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
               {profile.home.heroDescription}
             </p>
@@ -64,7 +70,13 @@ export default async function HomePage() {
       <Reveal>
         <section className="brut-card grid gap-6 p-5 md:grid-cols-[0.7fr_1.3fr] md:p-10">
           <div className="grid content-start gap-2.5">
-            <p className="eyebrow">Now</p>
+            <p className="eyebrow eyebrow--plain inline-flex items-center gap-2">
+              <span
+                aria-hidden
+                className="h-2 w-2 rounded-full border border-[var(--ink)] bg-[var(--cat-tools)]"
+              />
+              Now
+            </p>
             <h2 className="display-section">{profile.home.nowTitle}</h2>
           </div>
           <div className="grid gap-3.5 text-base leading-7 text-[var(--muted)]">
@@ -102,7 +114,7 @@ export default async function HomePage() {
           <div className="rule" />
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div className="grid gap-2.5">
-              <p className="eyebrow">From the journal</p>
+              <p className="eyebrow eyebrow--plain">From the journal</p>
               <h2 className="display-section">Latest writing</h2>
             </div>
             <InternalLink href="/blog" variant="text">
@@ -110,13 +122,45 @@ export default async function HomePage() {
             </InternalLink>
           </div>
         </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {latestPosts.map((post, index) => (
-            <Reveal key={post.slug} delay={index * 0.05}>
-              <PostCard post={post} priority={index === 0} />
-            </Reveal>
-          ))}
-        </div>
+        {latestPosts.length > 0 ? (
+          <ul className="grid divide-y-[var(--border-w)] divide-[var(--ink)] border-y-[var(--border-w)] border-[var(--ink)]">
+            {latestPosts.map((post, index) => {
+              const date = new Intl.DateTimeFormat("vi-VN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+              }).format(new Date(post.date));
+              return (
+                <li key={post.slug}>
+                  <Reveal delay={index * 0.05}>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="group grid gap-2 py-5 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)] md:grid-cols-[auto_1fr_auto] md:items-baseline md:gap-6"
+                    >
+                      <span
+                        aria-hidden
+                        className="h-2.5 w-2.5 shrink-0 self-center rounded-full border border-[var(--ink)] md:self-auto"
+                        style={{ background: categoryColor(post.category) }}
+                      />
+                      <span className="grid gap-1">
+                        <span className="font-display text-lg font-semibold leading-snug tracking-[-0.005em] group-hover:underline">
+                          {post.title}
+                        </span>
+                        <span className="line-clamp-1 text-sm text-[var(--muted)]">
+                          {post.description}
+                        </span>
+                      </span>
+                      <Meta
+                        items={[post.category, { label: date, dateTime: post.date }]}
+                        className="md:justify-end"
+                      />
+                    </Link>
+                  </Reveal>
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
       </section>
     </div>
   );

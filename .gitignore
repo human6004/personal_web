@@ -10,3 +10,7 @@ out
 .wscript-test.txt
 coverage
 dist
+
+tsconfig.tsbuildinfo
+.next-stale*
+.dev-verify*.log

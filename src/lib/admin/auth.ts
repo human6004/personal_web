@@ -67,10 +67,22 @@ export function verifySessionToken(token: string | undefined, secret: string) {
   }
 }
 
+// Giá trị mẫu trong .env.example. Nếu deploy mà chưa đổi -> coi như chưa cấu hình
+// để không bao giờ mở admin bằng mật khẩu ai cũng biết.
+const insecureDefaults = new Set(["change-me", "change-me-long-random-string"]);
+
+function safeSecret(value: string | undefined, minLength: number) {
+  const trimmed = value?.trim() || "";
+  if (trimmed.length < minLength || insecureDefaults.has(trimmed)) {
+    return "";
+  }
+  return trimmed;
+}
+
 export function getAdminSecrets() {
   return {
-    password: process.env.ADMIN_PASSWORD || "",
-    sessionSecret: process.env.ADMIN_SESSION_SECRET || ""
+    password: safeSecret(process.env.ADMIN_PASSWORD, 8),
+    sessionSecret: safeSecret(process.env.ADMIN_SESSION_SECRET, 16)
   };
 }
 

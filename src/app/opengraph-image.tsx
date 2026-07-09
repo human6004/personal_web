@@ -22,9 +22,10 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#f7f7f3",
-          color: "#22251f",
-          padding: "72px",
+          background: "#eef8f3",
+          color: "#142119",
+          padding: "64px",
+          border: "12px solid #142119",
           fontFamily: "Arial"
         }}
       >
@@ -33,10 +34,14 @@ export default async function Image() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            fontSize: 28
+            fontSize: 28,
+            fontWeight: 700
           }}
         >
-          <span>{profile.name}</span>
+          <span>
+            {profile.name}
+            <span style={{ color: "#5ed8c8" }}>.</span>
+          </span>
           <span>Portfolio + Knowledge Blog</span>
         </div>
         <div
@@ -48,10 +53,11 @@ export default async function Image() {
         >
           <div
             style={{
-              width: 160,
-              height: 20,
+              width: 180,
+              height: 22,
               borderRadius: 999,
-              background: "#b9d66f"
+              background: "#f8dc7a",
+              border: "2px solid #142119"
             }}
           />
           <div
