@@ -6,6 +6,17 @@ import { hasDatabaseUrl } from "./db/neon";
 
 const stringArray = z.array(z.string());
 
+// URL/handle do admin nhập rồi đổ thẳng vào <a href>. Chặn các protocol có thể
+// chạy script (javascript:/data:/vbscript:) -> self-XSS. Cho phép phần còn lại
+// (https, mailto, path nội bộ, username thô) để không phá dữ liệu sẵn có.
+const dangerousProtocol = /^\s*(javascript|data|vbscript):/i;
+
+export const urlOrEmpty = z
+  .string()
+  .trim()
+  .refine((value) => !dangerousProtocol.test(value), "This URL is not allowed.")
+  .default("");
+
 export const profileSchema = z.object({
   name: z.string().min(1).max(80),
   title: z.string().min(1).max(140),
@@ -13,11 +24,12 @@ export const profileSchema = z.object({
   tagline: z.string().min(1).max(240),
   englishTagline: z.string().max(240).default(""),
   socials: z.object({
-    github: z.string().default(""),
-    linkedin: z.string().default(""),
-    facebook: z.string().default(""),
-    email: z.string().default(""),
-    cv: z.string().default("")
+    github: urlOrEmpty,
+    linkedin: urlOrEmpty,
+    facebook: urlOrEmpty,
+    // email nhập thô rồi wrap `mailto:` cứng khi render -> chỉ cần chặn protocol nguy hiểm.
+    email: urlOrEmpty,
+    cv: urlOrEmpty
   }),
   home: z.object({
     avatarImage: z.string().min(1).default("/images/avatar.svg"),

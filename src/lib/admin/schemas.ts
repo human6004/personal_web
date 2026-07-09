@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { profileSchema } from "@/lib/profile";
+import { profileSchema, urlOrEmpty } from "@/lib/profile";
 
 export const slugSchema = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase letters, numbers and hyphens.");
+
 
 export const postCategorySchema = z.enum([
   "Tech",
@@ -38,10 +39,10 @@ export const projectInputSchema = z.object({
   tags: stringList,
   status: z.string().min(1).max(120),
   cover: z.string().min(1).default("/images/project-portfolio.svg"),
-  repoUrl: z.string().default(""),
-  demoUrl: z.string().default(""),
-  caseStudyUrl: z.string().default(""),
-  externalUrl: z.string().default(""),
+  repoUrl: urlOrEmpty,
+  demoUrl: urlOrEmpty,
+  caseStudyUrl: urlOrEmpty,
+  externalUrl: urlOrEmpty,
   highlights: stringList,
   featured: z.boolean().default(false),
   draft: z.boolean().default(false),

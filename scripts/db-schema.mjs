@@ -64,7 +64,13 @@ const statements = [
   )`,
   `create index if not exists posts_public_date_idx on posts (draft, date desc)`,
   `create index if not exists projects_public_year_idx on projects (draft, year desc)`,
-  `create index if not exists projects_featured_idx on projects (featured, draft)`
+  `create index if not exists projects_featured_idx on projects (featured, draft)`,
+  `create table if not exists login_attempts (
+    ip text primary key,
+    attempts int not null default 0,
+    first_attempt_at timestamptz not null default now(),
+    locked_until timestamptz
+  )`
 ];
 
 for (const statement of statements) {

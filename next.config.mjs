@@ -35,6 +35,25 @@ const nextConfig = {
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()"
+          },
+          // ponytail: 'unsafe-inline' cho script/style là ceiling (Next inline hydration +
+          // Tailwind). Nâng lên nonce khi thêm middleware. Cloudinary widget cần
+          // upload-widget.cloudinary.com (script + iframe) và api.cloudinary.com (upload).
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' https://upload-widget.cloudinary.com",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: blob: https://res.cloudinary.com",
+              "font-src 'self' data:",
+              "connect-src 'self' https://api.cloudinary.com",
+              "frame-src 'self' https://upload-widget.cloudinary.com",
+              "frame-ancestors 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "object-src 'none'"
+            ].join("; ")
           }
         ]
       }

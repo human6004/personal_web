@@ -68,4 +68,39 @@ describe("profile content", () => {
 
     expect(parsed.home.avatarImage).toBe("/images/avatar.svg");
   });
+
+  it("rejects javascript: protocol in social urls", () => {
+    const result = profileSchema.safeParse({
+      ...defaultProfile,
+      socials: { ...defaultProfile.socials, github: "javascript:alert(1)" }
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects data: protocol in social urls", () => {
+    const result = profileSchema.safeParse({
+      ...defaultProfile,
+      socials: { ...defaultProfile.socials, email: "data:text/html,<script>1</script>" }
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("accepts https, raw handles, and internal paths", () => {
+    const parsed = profileSchema.parse({
+      ...defaultProfile,
+      socials: {
+        github: "https://github.com/example",
+        linkedin: "some-handle",
+        facebook: "http://fb.com/example",
+        email: "me@example.com",
+        cv: "/cv.pdf"
+      }
+    });
+
+    expect(parsed.socials.github).toBe("https://github.com/example");
+    expect(parsed.socials.linkedin).toBe("some-handle");
+    expect(parsed.socials.email).toBe("me@example.com");
+  });
 });
