@@ -163,6 +163,21 @@ export function validateCloudinaryImageFile(file: unknown) {
 
 type SignableValue = string | number | boolean | string[] | number[];
 
+// Allowlist thay vì denylist: chỉ ký đúng các param upload an toàn. Denylist bỏ sót
+// param nguy hiểm (type, access_mode, notification_url, invalidate, eager...) mà client
+// có thể tự chèn rồi được server ký hợp lệ. folder/public_id còn được validate thêm
+// trong signCloudinaryUploadParams.
+const signableParamAllowlist = new Set([
+  "folder",
+  "public_id",
+  "timestamp",
+  "tags",
+  "context",
+  "resource_type",
+  "source",
+  "upload_preset"
+]);
+
 export function sanitizeSignatureParams(paramsToSign: unknown) {
   if (!paramsToSign || typeof paramsToSign !== "object") {
     throw new Error("Invalid Cloudinary signature payload.");
@@ -173,9 +188,7 @@ export function sanitizeSignatureParams(paramsToSign: unknown) {
       if (
         value === null ||
         typeof value === "undefined" ||
-        key === "file" ||
-        key === "signature" ||
-        key === "api_key"
+        !signableParamAllowlist.has(key)
       ) {
         return params;
       }

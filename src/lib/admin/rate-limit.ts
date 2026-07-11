@@ -77,7 +77,9 @@ export async function checkAndConsumeLoginAttempt(
 
     return { ok: true };
   } catch (error) {
-    console.error("Login rate-limit check failed (fail-open):", error);
+    // SECURITY: brute-force lockout tạm thời VÔ HIỆU khi DB lỗi. Prefix riêng để
+    // dựng alert (log-based metric) khi vận hành, tránh chìm trong log thường.
+    console.error("[SECURITY][rate-limit-fail-open] login lockout disabled:", error);
     return { ok: true };
   }
 }

@@ -17,11 +17,23 @@ export const postCategorySchema = z.enum([
 
 const stringList = z.array(z.string().trim().min(1)).default([]);
 
+// Ép ISO date (YYYY-MM-DD). Nếu chỉ min(1) thì ngày sai định dạng lọt qua Zod rồi
+// vỡ ở cast Postgres -> 500. Validate ở đây để trả 400 sạch.
+const isoDateSchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "Use an ISO date (YYYY-MM-DD).")
+  .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid calendar date.");
+
+// year là text trong DB nhưng vẫn nên là số 4 chữ số để tránh rác.
+const yearSchema = z
+  .string()
+  .regex(/^\d{4}$/, "Use a 4-digit year.");
+
 export const postInputSchema = z.object({
   slug: slugSchema,
   title: z.string().min(1).max(160),
   description: z.string().min(1).max(320),
-  date: z.string().min(1),
+  date: isoDateSchema,
   category: postCategorySchema,
   tags: stringList,
   cover: z.string().min(1).default("/images/blog-notes.svg"),
@@ -33,7 +45,7 @@ export const projectInputSchema = z.object({
   slug: slugSchema,
   title: z.string().min(1).max(160),
   summary: z.string().min(1).max(360),
-  year: z.string().min(4).max(12),
+  year: yearSchema,
   role: z.string().min(1).max(160),
   stack: stringList,
   tags: stringList,
