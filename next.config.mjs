@@ -42,7 +42,9 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' https://upload-widget.cloudinary.com",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://res.cloudinary.com",
+              // raw.githubusercontent.com: ảnh nằm trong repo, được README sync viết lại
+              // thành URL tuyệt đối. Chỉ mở đúng host này, badge/ảnh ngoài bị script gỡ.
+              "img-src 'self' data: blob: https://res.cloudinary.com https://raw.githubusercontent.com",
               "font-src 'self' data:",
               "connect-src 'self' https://api.cloudinary.com",
               "frame-src 'self' https://upload-widget.cloudinary.com",
